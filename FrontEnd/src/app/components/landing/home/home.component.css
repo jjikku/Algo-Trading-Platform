@@ -1,0 +1,30 @@
+h1 {
+  font-family: "Lucida Console", "Courier New", cursive;
+  font-size: 50px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-top: 20px; 
+  color: #CCC;
+}
+
+.books-home {
+  margin: 50% auto;
+}
+
+/* .panel h2 {
+  font-family: 'Wendy One', sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-left: 145px; 
+  text-align: left;
+} */
+
+.image{
+  height:10em;
+  left: 10em;
+  background-size:auto; 
+  width:auto; 
+  background-image:url('../../../../assets/Image/images1.jpg');
+  background-position:50% 50%;
+}

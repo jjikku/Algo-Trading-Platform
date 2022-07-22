@@ -12,8 +12,8 @@ import { ServerResponse } from '../models/server-response.model';
 import { User } from '../models/user.model';
 import { Receipt } from '../models/receipt.model';
 
-//const baseUrl = 'http://localhost:8000/user';
-const baseUrl = 'api/user';
+const baseUrl = 'http://localhost:8000/user';
+//const baseUrl = 'api/user';
 const registerEndpoint = baseUrl + '/register';
 const loginEndpoint = baseUrl + '/login';
 const profileEndpoint = baseUrl + '/profile/';

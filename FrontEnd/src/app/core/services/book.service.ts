@@ -11,8 +11,8 @@ import { HttpClient } from '@angular/common/http';
 import { ServerResponse } from '../models/server-response.model';
 import { Book } from '../models/book.model';
 
-//const domain = 'http://localhost:8000';
-const domain = 'api';
+const domain = 'http://localhost:8000';
+//const domain = 'api';
 const getSingleBookEndpoint = domain + '/book/details/';
 const createBookEndpoint = domain + '/book/add';
 const editBookEndpoint = domain + '/book/edit/';

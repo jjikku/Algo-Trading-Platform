@@ -3,9 +3,11 @@ const BOOK_CONTROLLER = require('../controllers/book');
 const COMMENT_CONTROLLER = require('../controllers/comment');
 const CART_CONTROLLER = require('../controllers/cart');
 const ERROR_CONTROLLER = require('../controllers/error');
+const STRATEGY_CONTROLLER = require('../controllers/strategy');
 const AUTH = require('./auth');
 
 module.exports = (APP) => {
+    APP.get('/deploy/strategy/:id',STRATEGY_CONTROLLER.getStrategy);
     APP.post('/user/register', USER_CONTROLLER.register);
     APP.post('/user/login', USER_CONTROLLER.login);
     APP.get('/user/profile/:username', AUTH.isAuth, USER_CONTROLLER.getProfile);

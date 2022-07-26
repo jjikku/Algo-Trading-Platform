@@ -14,14 +14,7 @@
         "sourceType": "module"
     },
     "rules": {
-        "indent": [
-            "warn",
-            4
-        ],
-        "linebreak-style": [
-            "error",
-            "windows"
-        ],
+        
         "quotes": [
             "error",
             "single"

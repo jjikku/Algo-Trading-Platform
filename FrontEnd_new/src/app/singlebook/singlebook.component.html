@@ -1,0 +1,41 @@
+
+    <h1 class="display-2 bg-img text-white bg-overlay text-center"></h1>
+
+    <section>
+            <div class="container py-3">
+              <div class="card">
+                <div class="row " *ngFor="let book of book">
+                  <div class="col-md-4" >
+                      <img class="rounded-circle"  src="{{ book.image }}" class="w-100">
+                    </div>
+                    <div class="col-md-8 px-3">
+                      <div class="card-block px-3" >
+                        <h4 class="card-title">{{ book.bookname}}</h4>
+                        Author : {{ book.authorname }}
+                        <hr>
+                        {{ book.about}}
+                        <!-- <p class="card-text">{{ book.desc }}</p> -->
+
+                        <form (submit) = "editBook(book._id)"
+                        >
+                        <input type="hidden" name="id" value="{{ book._id }}">
+                        <button type="submit" class = "btn btn-success btn-sm" style="float: right;">Edit Book</button>
+                        
+                      </form>
+
+                        <form >
+                        <input type="hidden" name="id" value="{{ book._id }}">
+                        <button id="dltbtn" type="submit" class = "btn btn-danger btn-sm" style="float: right; margin-right: 25px" (click)="deleteBook(book._id)">Delete Book</button>
+                        </form>
+
+                        
+                      </div>
+                    </div>
+          
+                  </div>
+                </div>
+              </div>
+    </section>
+
+
+

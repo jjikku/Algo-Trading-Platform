@@ -3,120 +3,102 @@ const booksRouter = express.Router();
 const booksModel = require("../model/book.model");
 const jwt = require("jsonwebtoken");
 
-function verifyToken(req,res,next) {
-     const auth =  req.headers['authorization'];
-     console.log("auth = " + auth);
-    if(!auth)
-    {
-        console.log("No auth");
-      return res.status(200).send(req);
-    }
-    let token = auth.split(" ")[1];
-    if(token === "")
-    {
-        console.log("No token");
-
-      return res.status(401).send("Unauthorized Request");
-  
-    }
-    let payload = jwt.verify(token,"secretkey");
-    if(!payload)
-    {
-        console.log("No payload");
-
-      return res.status(401).send("Unauthorized Request");
-  
-    }
-    req.userId = payload.subject;
-    next();
+function verifyToken(req, res, next) {
+  const auth = req.headers["authorization"];
+  console.log("auth = " + auth);
+  if (!auth) {
+    console.log("No auth");
+    return res.status(200).send(req);
   }
+  let token = auth.split(" ")[1];
+  if (token === "") {
+    console.log("No token");
+
+    return res.status(401).send("Unauthorized Request");
+  }
+  let payload = jwt.verify(token, "secretkey");
+  if (!payload) {
+    console.log("No payload");
+
+    return res.status(401).send("Unauthorized Request");
+  }
+  req.userId = payload.subject;
+  next();
+}
 
 booksRouter.post("/addbook", verifyToken, function (req, res) {
-    var newbook = {
-      bookname:req.body.book.title,
-      authorname:req.body.book.author,
-      image:req.body.book.image,
-      about:req.body.book.about
-     };
+  var newbook = {
+    bookname: req.body.book.title,
+    authorname: req.body.book.author,
+    image: req.body.book.image,
+    about: req.body.book.about,
+  };
 
-    console.log("add book route")
-    console.log(req.body);
-    var addbook = new booksModel(newbook);
-    addbook.save();
-    res.send(req.body);
-  });
+  console.log("add book route");
+  console.log(req.body);
+  var addbook = new booksModel(newbook);
+  addbook.save();
+  res.send(req.body);
+});
 
-   booksRouter.get("/",verifyToken, function(req,res){
-    //console.log(req.params.email);
-    //booksRouter.get("/", function(req,res){
-    console.log(req.originalUrl);
-    console.log("Books router");
-     //console.log(checkuser);
-     try{
-        booksModel.find({})
-        .then ((books) => {
-            console.log(books);
-            res.send(books);
-
-        });
-        }
-        catch(e)
-        {
-            console.log(e);
-            console.log("error");
-            res.send(e);
-        }
-
+booksRouter.get("/", verifyToken, function (req, res) {
+  //console.log(req.params.email);
+  //booksRouter.get("/", function(req,res){
+  console.log(req.originalUrl);
+  console.log("Books router");
+  //console.log(checkuser);
+  try {
+    booksModel.find({}).then((books) => {
+      //console.log(books);
+      res.send(books);
     });
-  
-    booksRouter.get("/:id", verifyToken, function(req,res){
-        //console.log(req.params.email);
-            
-        
-        console.log("Books router");
-         //console.log(checkuser);
-         try{
-            booksModel.find({"_id":req.params.id})
-            .then ((books) => {
-                console.log(books);
-                res.send(books);
-    
-            });
-            }
-            catch(e)
-            {
-                console.log(e);
-                console.log("error");
-                res.send(e);
-            }
-    
-        });
-      
+  } catch (e) {
+    console.log(e);
+    console.log("error");
+    res.send(e);
+  }
+});
 
+booksRouter.get("/:id", verifyToken, function (req, res) {
+  //console.log(req.params.email);
 
-        // booksRouter.get("/:id",function(req,res){
-        //     //console.log(req.params.email);
-                
-            
-        //     console.log("Books router- ID");
-        //      //console.log(checkuser);
-        //      try{
-        //         booksModel.find({"_id":req.params.id})
-        //         .then ((books) => {
-        //             console.log(books);
-        //             res.send(books);
-        
-        //         });
-        //         }
-        //         catch(e)
-        //         {
-        //             console.log(e);
-        //             console.log("error");
-        //             res.send(e);
-        //         }
-        
-        //     });
-          
+  console.log("Books router");
+  //console.log(checkuser);
+  try {
+    booksModel.find({ _id: req.params.id }).then((books) => {
+      //console.log(books);
+      res.send(books);
+    });
+    
+  } catch (e) {
+    console.log(e);
+    console.log("error");
+    res.send(e);
+  }
+});
+
+// booksRouter.get("/:id",function(req,res){
+//     //console.log(req.params.email);
+
+//     console.log("Books router- ID");
+//      //console.log(checkuser);
+//      try{
+//         booksModel.find({"_id":req.params.id})
+//         .then ((books) => {
+//             console.log(books);
+//             res.send(books);
+
+//         });
+//         }
+//         catch(e)
+//         {
+//             console.log(e);
+//             console.log("error");
+//             res.send(e);
+//         }
+
+//     });
+
 // const books = require('../data/books');
 //const bookdata = require("../model/BookModel");
 //const nav = require("../../public/js/nav");

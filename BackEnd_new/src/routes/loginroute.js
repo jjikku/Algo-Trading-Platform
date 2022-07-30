@@ -13,6 +13,7 @@ loginRouter.post("/",function(req,res){
      //console.log(checkuser);
      try{
         users.findOne({ "email": checkuser.email }, (error,user) => {
+            console.log('user = ' + user);
             if(error){
                 console.log(error);
             }

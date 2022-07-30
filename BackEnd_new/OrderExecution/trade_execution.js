@@ -65,6 +65,8 @@ module.exports = {
     getorderdetails: (req, res) => {
         (async () => {
             //creating the instance of XTSRest
+
+            
             xtsInteractive = new XTSInteractive(url);
             
             //calling the logIn API

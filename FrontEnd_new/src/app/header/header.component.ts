@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
     if(this._auth.loggedIn())
     {
       this.username = this.userService.getuser();
-      console.log("header "+ this.username);
+      //console.log("header "+ this.username);
     }
   }
 }

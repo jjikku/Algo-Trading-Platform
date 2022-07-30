@@ -1,4 +1,4 @@
-
+/* 
 
 .card
   {
@@ -45,4 +45,105 @@ a{
 
 a:hover{
     color: white;
+} */
+.row
+{
+    padding:160px;
+}
+.p-profile{
+    background:url(https://choiceindia.com/blog/content/images/2021/12/how-to-start-stock-market-investment.jpg);
+    width: 100%;
+    height: 300px;
+    /* padding-top: 100px; */
+    background-size: cover;
+    background-position:center;
+    background-repeat: no-repeat;
+    
+}
+span
+{
+    background: #16663a;
+    color: #f0676e;
+    padding: 1px 7px;
+    font-size: 14px;
+    width: 80%;
+}
+.p-des{
+    
+    color:#fff;
+    width: 80%;
+}
+.p-rgt-sec{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+form .form-group{
+    box-shadow: 1px 2px 12px 1px #0003;
+    width:80%;
+}
+form .form-control{
+    min-height: 60px;
+    padding: 5px 20px;
+    border-radius: 0;
+    border: 0;
+    outline: none;
+    background-color: #fff;
+    width:60%;
+}
+form .btn-warning{
+    min-height: 60px;
+    padding: 5px 35px;
+    border: 0;
+    border-radius:0;
+    font-weight: 500;
+    width:40%;
+    
+}
+/* css card */
+.order-card {
+    color: #fff;
+}
+
+.bg-c-blue {
+    background: linear-gradient(45deg,#013b33,#684901);
+}
+
+.bg-c-green {
+    background: linear-gradient(45deg,#013b33,#684901);
+}
+
+.bg-c-yellow {
+    background: linear-gradient(45deg,#013b33,#684901);
+}
+
+.bg-c-pink {
+    background: linear-gradient(45deg,#013b33,#684901);
+}
+
+
+.card {
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+    box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+    border: none;
+    margin-bottom: 30px;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.card .card-block {
+    padding: 30px;
+}
+
+.order-card i {
+    font-size: 26px;
+}
+
+.f-left {
+    float: left;
+}
+
+.f-right {
+    float: right;
 }

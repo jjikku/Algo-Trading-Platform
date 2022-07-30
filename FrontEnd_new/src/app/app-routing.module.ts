@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddbooksComponent } from './addbooks/addbooks.component';
+import { AddstrategyComponent } from './addstrategy/addstrategy.component';
 import { AuthGuard } from './auth.guard';
 import { BooksComponent } from './books/books.component';
 import { EditbookComponent } from './editbook/editbook.component';
@@ -8,36 +9,38 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { SinglebookComponent } from './singlebook/singlebook.component';
+import { SinglestrategyComponent } from './singlestrategy/singlestrategy.component';
+import { StrategyComponent } from './strategy/strategy.component';
 
 const routes: Routes = [
   {path:"",component:HomeComponent,pathMatch: 'full'},
   {path:"home",component:HomeComponent},
   {path:"login",component:LoginComponent},
   {path:"signup",component:SignupComponent},
-  { path:"books",
-    component:BooksComponent,
-    canActivate: [AuthGuard],
+  { path:"strategy",
+    component:StrategyComponent,
+    // canActivate: [AuthGuard],
     pathMatch: 'full'
   },
-  {path:"singlebook",    
+  {path:"singlestrategy",    
     canActivate: [AuthGuard],
     pathMatch: 'full',
-    component:SinglebookComponent
+    component:SinglestrategyComponent
   },
-  {path:"singlebook/:id",    
+  {path:"singlestrategy/:id",    
    canActivate: [AuthGuard],
   pathMatch: 'full',
-  component:SinglebookComponent
+  component:SinglestrategyComponent
 },
   {path:"editbook/:id",   
    canActivate: [AuthGuard],
   pathMatch: 'full', 
   component:EditbookComponent
 },
-  {path:"addbook",    
-  canActivate: [AuthGuard],
+  {path:"addstrategy",    
+  // canActivate: [AuthGuard],
   pathMatch: 'full', 
-  component:AddbooksComponent
+  component:AddstrategyComponent
 }
 ];
 

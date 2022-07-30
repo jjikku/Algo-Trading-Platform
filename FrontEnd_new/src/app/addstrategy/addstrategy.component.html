@@ -1,0 +1,28 @@
+<form class="container addstrategy text-center border border-light p-5 justify-content-center"  method="POST"
+    (ngSubmit)="addStrategy()"
+    [formGroup]="addStrategyForm"
+    >
+
+<p class="h4 mb-4">Add Strategy Form</p>
+<input id="stratname" formControlName="stratname"
+name="stratname" type="text" class="form-control mb-4" placeholder="Strategy Name">
+
+<!-- <br>
+<input id="Exchangename" formControlName="Exchangename"
+name="Exchangename" type="text" class="form-control mb-4" placeholder="Exchange Name">
+
+<br>
+
+<input id="brokername" formControlName="brokername"
+name="brokername" type="text" class="form-control mb-4" placeholder="Broker Name">
+<br> -->
+<!-- <input id="image" formControlName="image" 
+    name="image" type="text"
+    class="form-control mb-4" placeholder="Image URL"> -->
+<div class="form-group">
+    <textarea id="strategy" formControlName="strategy"
+    name="strategy" class="form-control rounded-0 " id ="exampleFormControlTextarea2" rows="3" placeholder="Description about strategy"></textarea>
+</div>
+<button id="addstrategy" class="btn btn-success" type="submit">CREATE STRATEGY</button>
+
+</form>

@@ -1,6 +1,39 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@import url('https://fonts.googleapis.com/css?family=Oswald:300,400,500,700');
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800');
+
 body{
-    background-image: url('../src/assets/images/bg3.jpg');
-    background-size: cover;
+      margin: 0;  
+      padding: 0;
+      background-color: rgb(7, 6, 3); 
+    /* background-image: url('../src/assets/images1/wh-bg.webp'); */
+    /* background-size: cover; */
     
+  }
+  p{
+    margin: 0;
+  }
+  .p-wrapper
+  {
+    position: relative;
+  }
+  .p-wrapper::before{
+    content: '';
+    background:#ab4100 ;
+    height: 230vh;
+    width:25vw;
+    position: absolute;
+    z-index: -1;
+  }
+  
+  .p-flex{
+    display: flex;
+  }
+  .p-flex-align-center{
+    align-items: center;
+  }
+  .p-flex-jc-sb{
+    justify-content: space-between;
   }

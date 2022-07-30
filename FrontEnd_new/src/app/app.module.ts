@@ -17,6 +17,10 @@ import { AuthService  } from 'src/services/auth.service';
 import { AuthGuard } from './auth.guard';
 import { TokeninterceptorService } from 'src/services/tokeninterceptor.service';
 import { EditbookComponent } from './editbook/editbook.component'; 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { StrategyComponent } from './strategy/strategy.component';
+import { AddstrategyComponent } from './addstrategy/addstrategy.component';
+import { SinglestrategyComponent } from './singlestrategy/singlestrategy.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,10 @@ import { EditbookComponent } from './editbook/editbook.component';
     AddbooksComponent,
     SinglebookComponent,
     HeaderComponent,
-    EditbookComponent
+    EditbookComponent,
+    StrategyComponent,
+    AddstrategyComponent,
+    SinglestrategyComponent
   ],
   imports: [
     BrowserModule,

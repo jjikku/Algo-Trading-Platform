@@ -1,6 +1,7 @@
 const express = require("express");
 const booksRouter = express.Router();
 const booksModel = require("../model/book.model");
+const userModel = require("../model/users.model");
 const jwt = require("jsonwebtoken");
 
 function verifyToken(req,res,next) {
@@ -53,7 +54,7 @@ booksRouter.post("/addbook", verifyToken, function (req, res) {
     console.log("Books router");
      //console.log(checkuser);
      try{
-        booksModel.find({})
+        userModel.find({})
         .then ((books) => {
             console.log(books);
             res.send(books);

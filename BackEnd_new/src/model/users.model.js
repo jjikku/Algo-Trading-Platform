@@ -12,7 +12,8 @@ var UsersSchema = new Schema({
     fname: String,
     lname:String,
     email:String,
-    pwd:String
+    pwd:String,
+    isAdmin:Number
 });
 
 var usersModel = mongoose.model('userslogin', UsersSchema, "users");                        //UserData is the model and NewBookData is the schema

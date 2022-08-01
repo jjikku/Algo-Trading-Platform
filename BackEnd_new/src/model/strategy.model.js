@@ -14,6 +14,6 @@ const StrategySchema = new Schema({
   //creationDate: { type: DATE, default: Date.now }
 });
 
-const STRATEGY = mongoose.model("strategy", StrategySchema, "strategy");
+const strategyModel = mongoose.model("strategy", StrategySchema, "strategy");
 
-module.exports = STRATEGY;
+module.exports = strategyModel;

@@ -14,7 +14,9 @@ signupRouter.post("/", function (req, res) {
     fname:req.body.signup.fname,
     lname:req.body.signup.lname,
     email:req.body.signup.email,
-    pwd:req.body.signup.pwd
+    pwd:req.body.signup.pwd,
+    isAdmin:0	 
+	
    };
   console.log("signup route")
   console.log(newuser.email);

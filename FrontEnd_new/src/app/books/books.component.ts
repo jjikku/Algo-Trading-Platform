@@ -16,9 +16,10 @@ export class BooksComponent implements OnInit {
   books = [
     {
       _id:Number,
-      bookname:String,
-      authorname: String,
-      image: String
+      fname: String,
+      lname:String,
+      email:String,
+      isAdmin:Number
     }
   ]
   constructor(private bookservice: BookService, private router:Router) { }

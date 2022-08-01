@@ -12,7 +12,8 @@ var NewSignupSchema = new Schema({
     fname: String,
     lname:String,
     email:String,
-    pwd:String
+    pwd:String,
+    isAdmin:Number	
 });
 
 var signupModel = mongoose.model('users', NewSignupSchema);                        //UserData is the model and NewBookData is the schema

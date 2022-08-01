@@ -9,6 +9,7 @@ import { UserService } from 'src/services/user.service';
 })
 export class HeaderComponent implements OnInit {
   username:any;
+  IsAdm:any;
   constructor(private userService: UserService, public _auth: AuthService) { }
 
   ngOnInit(): void {
@@ -20,6 +21,12 @@ export class HeaderComponent implements OnInit {
     {
       this.username = this.userService.getuser();
       //console.log("header "+ this.username);
+    }
+  }
+  getuserType(){
+    if(this._auth.loggedIn())
+    {
+      this.IsAdm = this.userService.getuserType();
     }
   }
 }

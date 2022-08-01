@@ -46,8 +46,17 @@ export class LoginComponent implements OnInit {
         console.log("token set");
         console.log(data.token)
         console.log(data.fname);
-        this.userService.setuser(data.fname);
-        this.router.navigate(["/strategy"]);
+	this.userService.setuser(data.fname,data.isAdmin);
+        //this.userService.setuser(data.isAdmin);
+	this.router.navigate(["/home"]);
+        // if (data.isAdmin==0)
+        // {
+        //   this.router.navigate(["/books"]);
+        // }
+        // else
+        // {
+        //   this.router.navigate(["/home"]);
+        // }
       }
 
     })

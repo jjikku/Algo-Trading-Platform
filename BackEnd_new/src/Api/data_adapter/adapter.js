@@ -115,7 +115,7 @@ async function API_Md_login (xtsMarketDataAPI) {
   }
 
  async function getLTP(xtsMarketDataAPI,inst_id) { 
-  //console.log('inst id in getLTP() = ' + inst_id);  
+  console.log('inst id in getLTP() = ' + inst_id);  
   var LTP;
   let getQuotesRequest = {
     isTradeSymbol: isTradeSymbol,
@@ -130,15 +130,37 @@ async function API_Md_login (xtsMarketDataAPI) {
     publishFormat: 'JSON',
   };
 
+  async function getBnLTP(xtsMarketDataAPI) { 
+    //console.log('inst id in getLTP() = ' + inst_id);  
+    var LTP;
+    let getQuotesRequest = {
+      isTradeSymbol: isTradeSymbol,
+      instruments: [
+        {
+          exchangeSegment: 1,
+          exchangeInstrumentID: '26001',
+        }
+       
+      ],
+      xtsMessageCode: 1512,
+      publishFormat: 'JSON',
+    };
+  }
+  
   var getQuotes = async function (getQuotesRequest) {
+    //console.log(getQuotesRequest)
     let response = await xtsMarketDataAPI.getQuotes(getQuotesRequest);
+
+   
+      //console.log("LTP response = " + response);
+
+    
     LTP = (JSON.parse(response.result.listQuotes))['LastTradedPrice'];
     //console.log('LTP in = ' + LTP);
   
   };
  
   await getQuotes(getQuotesRequest);
-
   
   // setInterval(async () => {
   

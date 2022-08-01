@@ -1,199 +1,318 @@
-const { readCSV } = require('../Api/data_adapter/adapter');
-const { API_Md_login,getxts } = require('../Api/data_adapter/adapter');
-const { getMasterData } = require('../Api/data_adapter/adapter');
-const { getInstId } = require('../Api/data_adapter/adapter');
-const { getLTP } = require('../Api/data_adapter/adapter');
-const async = require('async');
-const set_n = require('./strategy_functions');
+const { readCSV } = require("../Api/data_adapter/adapter");
+const { API_Md_login, getxts } = require("../Api/data_adapter/adapter");
+const { getMasterData } = require("../Api/data_adapter/adapter");
+const { getInstId } = require("../Api/data_adapter/adapter");
+const { getLTP } = require("../Api/data_adapter/adapter");
+const async = require("async");
+const set_n = require("./strategy_functions");
+const TRADE_EXECUTION = require("../oep/trade_execution");
+
 const order_array = [];
 var order = [];
 
-
 // Loaded from DB on deploy
-function dummy_straddle(){var s,ce,pe;var set1 = set_n('09:16:00','15:25:00',40,'s','ce',34800,'current_week',10);var set2 = set_n('09:16:00','15:25:00',40,'s','pe',34800,'current_week',10);var set3 = set_n('09:20:00','15:20:00',60,'s','pe',34800,'current_week',20);var set4 = set_n('09:25:00','15:20:00',60,'s','ce',34800,'current_week',20);function set_n(entry_time,exit_time,stop_loss_percentage,buy_sell,ce_pe,strike,expiry,qty_in_lots) {var set_params = {entry_time:entry_time,buy_sell:buy_sell,exit_time:exit_time,stop_loss_percentage:stop_loss_percentage,ce_pe:ce_pe,strike:strike,expiry:expiry,qty_in_lots:qty_in_lots};return set_params;}return ([set1,set2,set3,set4]);}
+function dummy_straddle() {
+  var s, ce, pe;
+  var set1 = set_n(
+    "09:16:00",
+    "15:25:00",
+    40,
+    "s",
+    "CE",
+    35600,
+    "2022-08-04",
+    10
+  );
+  var set2 = set_n(
+    "09:16:00",
+    "15:25:00",
+    40,
+    "s",
+    "PE",
+    35600,
+    "2022-08-04",
+    10
+  );
+  var set3 = set_n(
+    "09:20:00",
+    "15:20:00",
+    60,
+    "s",
+    "PE",
+    35700,
+    "2022-08-04",
+    20
+  );
+  var set4 = set_n(
+    "09:25:00",
+    "15:20:00",
+    60,
+    "s",
+    "CE",
+    35700,
+    "2022-08-04",
+    20
+  );
+  function set_n(
+    entry_time,
+    exit_time,
+    stop_loss_percentage,
+    buy_sell,
+    ce_pe,
+    strike,
+    expiry,
+    qty_in_lots
+  ) {
+    var set_params = {
+      entry_time: entry_time,
+      buy_sell: buy_sell,
+      exit_time: exit_time,
+      stop_loss_percentage: stop_loss_percentage,
+      ce_pe: ce_pe,
+      strike: strike,
+      expiry: expiry,
+      qty_in_lots: qty_in_lots,
+    };
+    return set_params;
+  }
+  return [set1, set2, set3, set4];
+}
 var flag = 0;
+async function execution_engine(strategy) {
+  //   var buy_sell = [],
+  //     pe_buy_sell = [];
+  //   var ce_entry_price = [],
+  //     pe_entry_price = [];
+  //   var ce_inst = [],
+  //     pe_inst = [];
+  //   var ce_strike = [],
+  //     pe_strike = [];
+  //   var ce_expiry = [],
+  //     pe_expiry = [];
+  //   var qty = [],
+  //     pe_qty = [];
+  //   var ce_flag = [],
+  //     pe_flag = [];
+  var buy_sell = [];
+  var flag = [];
+  var exit_flag = [];
+  var inst_id = [];
+  var LTP = [];
+  var curr_time;
+  var curr_hrs = [];
+  var curr_mins = [];
+  var curr_secs = [];
+  var entry_hrs = [];
+  var entry_mins = [];
+  var entry_secs = [];
+  var exit_hrs = [];
+  var exit_mins = [];
+  var exit_secs = [];
+  var exit_ready = [];
+  var entry_price = [];
+  console.log("Strategy = " + strategy);
+  //await API_Md_login();
+  let xts = await getxts();
+  await API_Md_login(xts);
+  await getMasterData(xts);
 
- async function execution_engine(strategy){
-    var ce_buy_sell = [],pe_buy_sell=[];
-    var ce_entry_price=[],pe_entry_price=[];
-    var ce_inst=[],pe_inst=[];
-    var ce_strike=[],pe_strike=[];
-    var ce_expiry=[],pe_expiry=[];
-    var ce_qty=[],pe_qty=[];
-    var ce_flag = [],pe_flag = [];
-    var inst_id = [];
-    var LTP = [];
-    console.log('Strategy = ' + strategy);
-    //await API_Md_login();
-    let xts = await getxts();
-    await API_Md_login(xts);
-    await getMasterData(xts);
-    
-    let F = new Function('return ' + strategy)();
+  let F = new Function("return " + strategy)();
 
-    let set_n_params = F();
-    console.log('set_n_params');
-    console.log(set_n_params);
-    set_n_params.forEach(async function (element,i) {
-        async.parallel({
-            i: async function() {
-                 function getLtp(callback) {
-                    try{
-                        getInstId((element.strike + element.ce_pe), element.expiry, function(random_data) {
-                            callback(random_data);
-                        });    
-                    }
-                    catch(err)
-                    {
-                        console.log(err);
-                    }
-                    
-                     //return inst_id[i];
-                  }
-                
-                 
+  let set_n_params = F();
+  console.log("set_n_params");
+  console.log(set_n_params);
+  set_length = set_n_params.length;
+  console.log("length =" + set_length);
+  for (j = 0; j < set_length; j++) {
+    exit_flag[j] = 0;
+  }
+  console.log("exit = " + exit_flag);
+  set_n_params.forEach(async function (element, i) {
+    //console.log("inside foreach");
+    async.parallel({
+      i: async function () {
+        function getLtp(callback) {
+          //console.log("inside getLTP");
+          
+          //var strike[i] = (element.strike == ATM)   
+          try {
+            getInstId(
+              element.strike + element.ce_pe,
+              element.expiry,
+              function (random_data) {
+                callback(random_data);
+              }
+            );
+          } catch (err) {
+            console.log(err);
+          }
 
-    
-                setInterval(async () => {
-                    getLtp(async function(result) {
-                        inst_id[i] = result;
-                        //console.log("EE = " + inst_id[i]);
-                        LTP[i] = await getLTP(xts,inst_id[i]);
-                        console.log('inst ID = ' + inst_id[i] + ': LTP = ' + LTP[i]);
-                     }); 
-                }, 1000)
-                // if(element.ce_pe === 'ce')
-                // {
-                //     readCSV("../Api/34800CE.csv", function(ce_data){
-                //         //console.log(ce_data);
-                //         let time = ce_data.toString().split(',')[0].split(' ')[1];
-                //         let close = parseInt(ce_data.toString().split(',')[4]);
-                //         //  console.log('ce time = ' + time);
-                //         //  console.log('ce close = ' + close);
-                //          if(time == element.entry_time) 
-                //          {
-                //             console.log('time match');
-                //             ce_entry_price[i] = close;
-                //             ce_inst[i] = element.ce_pe;
-                //             ce_strike[i] = element.strike;
-                //             ce_expiry[i] = element.expiry;
-                //             ce_buy_sell[i] = element.buy_sell;
-                //             console.log('buy_sell:',ce_buy_sell[i]);
-
-                //             ce_qty[i] = element.qty_in_lots;
-                //             order[i] = {inst:ce_inst[i],strike:ce_strike[i],expiry:ce_expiry[i],buy_sell:ce_buy_sell[i],qty:ce_qty[i]};
-                //             push_order_array(order[i]);
-                //             ce_flag[i] = 0;
-                //          }
-                         
-                //          else if(ce_buy_sell[i] === 's')
-                //             {
-
-                //           //      console.log('close:' + close);
-                //           //      console.log('entry: = ' + entry_price);
-                //                 if(((close >= ce_entry_price*((element.stop_loss_percentage/100)+1)) || (time == element.exit_time)) && !ce_flag[i])
-                //                 {
-                //                     let buy_sell = 'b';
-                //                     order[i] = {inst:ce_inst[i],strike:ce_strike[i],expiry:ce_expiry[i],buy_sell:buy_sell,qty:ce_qty[i]};
-                //                     push_order_array(order[i]);
-                //                     ce_flag[i] = 1;    
-                //                 }
-                //             }
-                //             else if(ce_buy_sell[i] === 'b')
-                //             {
-                //                 if(((close <= ce_entry_price*(1-(element.stop_loss_percentage/100))) || (time == element.exit_time)) && !ce_flag[i])
-                //                 {
-                //                     let buy_sell = 's';
-                //                     order[i] = {inst:ce_inst[i],strike:ce_strike[i],expiry:ce_expiry[i],buy_sell:buy_sell,qty:ce_qty[i]};
-                //                     push_order_array(order[i]);
-                //                     ce_flag[i] = 1;    
-
-                //                 }
-
-                //             }
-                //     });
-                // }
-                // else if(element.ce_pe === 'pe')
-                // {
-                //     readCSV('../Api/34800PE.csv', function(pe_data){
-                //         //console.log(pe_data);
-                //         let time = pe_data.toString().split(',')[0].split(' ')[1];
-                //         let close = pe_data.toString().split(',')[4];
-                //         //  console.log('pe time = ' + time);
-                //         //  console.log('pe close = ' + close);
-                //         // console.log(time);
-                //         // console.log(element.entry_time);
-                //          if(time == element.entry_time)
-                //          {
-                //             console.log('time match');
-                //              pe_entry_price[i] = close;
-                //              pe_inst[i] = element.ce_pe;
-                //              pe_strike[i] = element.strike;
-                //              pe_expiry[i] = element.expiry;
-                //              pe_buy_sell[i] = element.buy_sell;
-                //              pe_qty[i] = element.qty_in_lots;
-                //              order[i] = {inst:pe_inst[i],strike:pe_strike[i],expiry:pe_expiry[i],buy_sell:pe_buy_sell[i],qty:pe_qty[i]};
-                //              //console.log(order[i]);
-                //             push_order_array(order[i]);
-                //             pe_flag[i] = 0;
-                            
-                //          }
-                //          if(pe_buy_sell[i] === 's')
-                //             {
-                //                 //console.log('exit = '+element.exit_time);
-                //                 //console.log('time = '+time);
-                //                 if(((close >= pe_entry_price*((element.stop_loss_percentage/100)+1))  || (time == element.exit_time)) && !pe_flag[i])
-                //                 {
-                //                     let buy_sell = 'b';
-                //                     order[i] = {inst:pe_inst[i],strike:pe_strike[i],expiry:pe_expiry[i],buy_sell:buy_sell,qty:pe_qty[i]};
-                //                     push_order_array(order[i]);
-                //                     pe_flag[i] = 1;
-
-                //                 }
-                //             }
-                //             else if(pe_buy_sell[i] === 'b')
-                //             {
-                //                 if(((close <= pe_entry_price*(1-(element.stop_loss_percentage/100)))  || (time == element.exit_time)) && !pe_flag[i])
-                //                 {
-                //                     let buy_sell = 's';
-                //                     order[i] = {inst:pe_inst[i],strike:pe_strike[i],expiry:pe_expiry[i],buy_sell:buy_sell,qty:pe_qty[i]};
-                //                     push_order_array(order[i]);
-                //                     pe_flag[i] = 1;
-                //                 }
-
-                //             }
-                            
-                //     });
-                // }    
-
-                //callback(null, i);    
-                
+          //return inst_id[i];
         }
-                    
-        
-            });
+    
 
+        var id = setInterval(async () => {
+          getLtp(async function (result) {
+            inst_id[i] = result;
+            //console.log("EE = " + inst_id[i]);
 
+            LTP[i] = await getLTP(xts, inst_id[i]);
+            buy_sell[i] = element.buy_sell;
+            console.log("inst ID = " + inst_id[i] + ": LTP = " + LTP[i]);
+            let date_obj = new Date();
+            curr_time =
+              date_obj.getHours() +
+              ":" +
+              date_obj.getMinutes() +
+              ":" +
+              date_obj.getSeconds();
+            curr_hrs[i] = parseInt(date_obj.getHours());
+            curr_mins[i] = parseInt(date_obj.getMinutes());
+            curr_secs[i] = parseInt(date_obj.getSeconds());
+            //console.log("Entry time = " + element.entry_time);
+            //console.log("Curr time = " + curr_time);
+            entry_hrs[i] = parseInt(element.entry_time.split(":")[0]);
+            entry_mins[i] = parseInt(element.entry_time.split(":")[1]);
+            entry_secs[i] = parseInt(element.entry_time.split(":")[2]);
+            if (curr_hrs[i] > entry_hrs[i] && !flag[i]) {
+              placeOrder(element.buy_sell, element.qty_in_lots, inst_id[i]);
+              flag[i] = 1;
+              entry_price[i] = LTP[i];
+            } else if (curr_hrs[i] == entry_hrs[i] && !flag[i]) {
+              if (curr_mins[i] > entry_mins[i]) {
+                placeOrder(element.buy_sell, element.qty_in_lots, inst_id[i]);
+                flag[i] = 1;
+                entry_price[i] = LTP[i];
+              } else if (curr_mins[i] == entry_mins[i]) {
+                if (curr_secs[i] >= entry_secs[i]) {
+                  placeOrder(element.buy_sell, element.qty_in_lots, inst_id[i]);
+                  flag[i] = 1;
+                  entry_price[i] = LTP[i];
+                }
+              }
+            }
+            if (buy_sell[i] === "s") {
+              exit_hrs[i] = parseInt(element.exit_time.split(":")[0]);
+              exit_mins[i] = parseInt(element.exit_time.split(":")[1]);
+              exit_secs[i] = parseInt(element.exit_time.split(":")[2]);
+              let date_obj = new Date();
+              curr_time =
+                date_obj.getHours() +
+                ":" +
+                date_obj.getMinutes() +
+                ":" +
+                date_obj.getSeconds();
+              curr_hrs[i] = parseInt(date_obj.getHours());
+              curr_mins[i] = parseInt(date_obj.getMinutes());
+              curr_secs[i] = parseInt(date_obj.getSeconds());
+              exit_ready[i] =
+                curr_hrs[i] > exit_hrs[i]
+                  ? 1
+                  : curr_hrs[i] == exit_hrs[i]
+                  ? curr_mins[i] > exit_mins[i]
+                    ? 1
+                    : curr_mins[i] == exit_mins[i]
+                    ? curr_secs[i] >= exit_secs[i]
+                      ? 1
+                      : 0
+                    : 0
+                  : 0;
 
+              //      console.log('close:' + close);
+              //      console.log('entry: = ' + entry_price);
+              if (
+                (LTP[i] >=
+                  entry_price[i] * (element.stop_loss_percentage / 100 + 1) ||
+                  exit_ready[i]) &&
+                flag[i] &&
+                !exit_flag[i]
+              ) {
+                let buy_sell = "b";
+                //order[i] = {inst:ce_inst[i],strike:ce_strike[i],expiry:ce_expiry[i],buy_sell:buy_sell,qty:ce_qty[i]};
+                placeOrder(buy_sell, element.qty_in_lots, inst_id[i]);
+                push_order_array(order[i]);
+                exit_flag[i] = 1;
+              }
+            } else if (buy_sell[i] === "b") {
+              exit_hrs[i] = parseInt(element.exit_time.split(":")[0]);
+              exit_mins[i] = parseInt(element.exit_time.split(":")[1]);
+              exit_secs[i] = parseInt(element.exit_time.split(":")[2]);
+              let date_obj = new Date();
+              curr_time =
+                date_obj.getHours() +
+                ":" +
+                date_obj.getMinutes() +
+                ":" +
+                date_obj.getSeconds();
+              curr_hrs[i] = parseInt(date_obj.getHours());
+              curr_mins[i] = parseInt(date_obj.getMinutes());
+              curr_secs[i] = parseInt(date_obj.getSeconds());
+              exit_ready[i] =
+                curr_hrs[i] > exit_hrs[i]
+                  ? 1
+                  : curr_hrs[i] == exit_hrs[i]
+                  ? curr_mins[i] > exit_mins[i]
+                    ? 1
+                    : curr_mins[i] == exit_mins[i]
+                    ? curr_secs[i] >= exit_secs[i]
+                      ? 1
+                      : 0
+                    : 0
+                  : 0;
+
+              //      console.log('close:' + close);
+              //      console.log('entry: = ' + entry_price);
+              if (
+                (LTP[i] <=
+                  entry_price[i] * (1 - element.stop_loss_percentage / 100) ||
+                  exit_ready[i]) &&
+                flag[i] &&
+                !exit_flag[i]
+              ) {
+                buy_sell = "b";
+                //order[i] = {inst:ce_inst[i],strike:ce_strike[i],expiry:ce_expiry[i],buy_sell:buy_sell,qty:ce_qty[i]};
+                placeOrder(buy_sell, element.qty_in_lots, inst_id[i]);
+                push_order_array(order[i]);
+                exit_flag[i] = 1;
+              }
+            }
+          });
+          const isTrue = (currentValue) => currentValue == 1;
+          if (exit_flag.every(isTrue)) {
+            console.log("EXIT = exited " + inst_id[i]);
+            clearInterval(id);
+            return null;
+          }
+        }, 1000);
+        async function placeOrder(buy_sell, qty, inst_id) {
+          var buy_or_sell = buy_sell == "s" ? "SELL" : "BUY";
+          order = { inst: inst_id, buy_sell: buy_or_sell, qty: qty };
+            TRADE_EXECUTION.executetrade(
+            inst_id,
+            25 * parseInt(qty),
+            buy_or_sell
+          );
+          push_order_array(order);
+        }
+      },
     });
-
-    return order_array;
+  });
 }
 
 //execution_engine();
 
-function push_order_array(order)
-{
-    order_array.push(order);
-    var popped = order_array.pop();
-    console.log(popped);
+function push_order_array(order) {
+  console.log("order =" + JSON.stringify(order));
+  order_array.push(order);
+  var popped = order_array.pop();
+  //console.log("popped order = " + popped);
 }
 
-function pop_order_array(){
-    return order_array.pop();
+function pop_order_array() {
+  return order_array.pop();
 }
 
-module.exports = {execution_engine,pop_order_array};
+module.exports = { execution_engine, pop_order_array };
 // module.exports = pop_order_array;
 //  {
 //     pop_order_array,

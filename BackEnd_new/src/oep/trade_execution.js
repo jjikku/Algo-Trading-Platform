@@ -1,4 +1,4 @@
-const VALIDATOR = require('validator');
+//const VALIDATOR = require('validator');
 //const BOOK = require('mongoose').model('Book');
 //const USER = require('mongoose').model('User');
 var XTSInteractive = require('xts-interactive-api').Interactive;
@@ -54,7 +54,7 @@ module.exports = {
           
           var getTradeBook = async function (reqObject) {
             let response = await xtsInteractive.getTradeBook();
-            console.log(response);
+            //console.log(response);
               // return res.status(200).json({
               //     message: 'Trade retrieved sucessfully!',
               //     data: response
@@ -100,7 +100,7 @@ module.exports = {
           
           var getOrderBook = async function () {
             let response = await xtsInteractive.getOrderBook();
-            console.log(response);
+            //console.log(response);
             //return response;
             // return res.status(200).json({
             //     message: 'Order retrieved sucessfully!',
@@ -109,7 +109,7 @@ module.exports = {
           };
     },
 
-    executetrade: (req, res) => {
+    executetrade: (req, res, buy_sell) => {
         (async () => {
             //creating the instance of XTSRest
             xtsInteractive = new XTSInteractive(url);
@@ -127,7 +127,7 @@ module.exports = {
               var socketInitRequest = {userID: logIn.result.userID,token: logIn.result.token,};
               xtsInteractiveWS.init(socketInitRequest);
               //Registering the socket Events
-              await registerEvents();
+              //await registerEvents();
               //calling the remaining methods of the Interactive API
               executeTradeAPI();
             } else {
@@ -138,14 +138,18 @@ module.exports = {
 
           async function executeTradeAPI() 
           {
-            console.log(req, res);
+            console.log("Trade execution = " + req + " : " + res + " : " + buy_sell);
 
             let placeOrderRequest = {
-                exchangeSegment: 'NSECM',
+                //exchangeSegment: 'NSECM',
+                exchangeSegment: 'NSEFO',
+
                 exchangeInstrumentID: req, //"SBIN-EQ", //22, BANKNIFTY 28JUL29SEP SPD
                 productType: 'MIS', //THIS IS FOR INTRADAY
                 orderType: 'MARKET',
-                orderSide: 'BUY',
+                //orderSide: 'BUY',
+                orderSide: buy_sell,
+
                 timeInForce: 'DAY',
                 disclosedQuantity: 0,
                 orderQuantity: res,
@@ -160,7 +164,7 @@ module.exports = {
 
           var placeOrder = async function (placeOrderRequest) {
             let response = await xtsInteractive.placeOrder(placeOrderRequest);
-            console.log(response);
+            //console.log(response);
             // return res.status(200).json({
             //     message: 'Order placed sucessfully!',
             //     data: response

@@ -9,7 +9,7 @@ mongoose.connect(
 const Schema = mongoose.Schema;
 
 const StrategySchema = new Schema({
-  title: String,
+  stratname: String,
   strategy: String,
   //creationDate: { type: DATE, default: Date.now }
 });

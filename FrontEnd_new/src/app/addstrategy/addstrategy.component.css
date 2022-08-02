@@ -1,11 +1,11 @@
 body{
-    /* background-image: url('../../assets/images/bg3.jpg'); */
+    background-image: url('../../assets/images/bg3.jpg');
     background-size: cover;
     
   }
 
 .navbar{
-    background:#681f02;
+    background:rgb(0, 0, 0);
     opacity: .75;
     
     width:100%;

@@ -1,12 +1,14 @@
 
 
-/* footer{
+
+footer{
     
     color: white;
     background: black;
     opacity:.75 !important;
     
-} */
+}
+/* 
 .container-fluid{
     overflow:hidden; 
     margin-top: 250px ;
@@ -41,4 +43,4 @@ h3{
 .rights{
     font-size: calc(10px + (12 - 10) * ((100vw - 360px) / (1600 - 360))) !important; 
 }
-
+ */ 

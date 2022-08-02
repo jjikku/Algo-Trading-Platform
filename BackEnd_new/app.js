@@ -5,14 +5,19 @@ const bodyParser = require("body-parser");
 const loginRouter = require("./src/routes/loginroute");
 const signupRouter = require("./src/routes/signuproute");
 const homeRouter = require("./src/routes/homeroute");
-const booksRouter = require("./src/routes/booksroute");
+//const booksRouter = require("./src/routes/booksroute");
 const editBooksRouter = require("./src/routes/editroute");
-const singleBookRouter = require("./src/routes/singlebookroute");
+//const singleBookRouter = require("./src/routes/singlebookroute");
 const strategyRouter = require('./src/routes/strategyroute');
+const singleStrategyRouter = require("./src/routes/singlestrategyroute");
+
 
 require('dotenv').config();
 
 const app = new express();
+
+// Global objects
+
 app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -21,12 +26,13 @@ app.use(express.static(path.join(__dirname, "/public")));
 
 app.use("/login", loginRouter);
 app.use("/signup", signupRouter);
-// app.use("/home", homeRouter);
-app.use("/books", booksRouter);
-app.use("/singlebook", singleBookRouter);
-app.use("/editbook",editBooksRouter);
+//app.use("/home", homeRouter);
+//app.use("/books", booksRouter);
+//app.use("/singlebook", singleBookRouter);
+//app.use("/editbook",editBooksRouter);
 app.use("/deploy",strategyRouter);
 app.use("/strategy",strategyRouter);
+app.use("/singlestrategy",singleStrategyRouter);
 
 const PORT = (process.env.PORT || 5000);
 

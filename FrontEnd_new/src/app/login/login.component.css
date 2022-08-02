@@ -1,6 +1,5 @@
 body{
-    /* background-image: "../../assets/images/bg3.jpg"; */
-    /* background-color: rgb(110, 94, 65); */
+    background-image: "../../assets/images/bg3.jpg";
     background-size: cover;
     
     
@@ -29,8 +28,7 @@ h1{
 }
 
 .modal-content{
-    background-color: rgb(95, 51, 1);
-    
+    background-color: black;
     padding: 0 18px;
     margin-top: 200px;
 }

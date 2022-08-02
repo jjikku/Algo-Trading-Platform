@@ -1,36 +1,37 @@
 body{
-    /* background-image: url('../images/bg3.jpg'); */
-    background-size: cover;
+  /* background-image: url('../images/bg3.jpg'); */
+  background-size: cover;
+  
+}
+
+
+
+
+
+.card
+{
     
-  }
+      width: 700px;
+  height:550px;
+
+    margin-top: 100px;
+    background: black;
+    color: white;
 
 
-
-
-  
-  .card
-  {
-      
-        width: 700px;
-    height:550px;
-      margin-top: 100px;
-      background: rgb(95, 51, 1);
-      color: white;
-  
-  
-  }
+}
 
 
 
 footer{
-    
-    color: white;
-    background: black;
-    opacity:.75 !important;
-    
+  
+  color: white;
+  background: black;
+  opacity:.75 !important;
+  
 }
 
 /* .avoid-clicks {
-    pointer-events: none;
-    
-  } */
+  pointer-events: none;
+  
+} */

@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
         console.log(data.fname);
 	this.userService.setuser(data.fname,data.isAdmin);
         //this.userService.setuser(data.isAdmin);
-	this.router.navigate(["/home"]);
+	this.router.navigate(["/strategy"]);
         // if (data.isAdmin==0)
         // {
         //   this.router.navigate(["/books"]);

@@ -26,6 +26,7 @@ app.use("/books", booksRouter);
 app.use("/singlebook", singleBookRouter);
 app.use("/editbook",editBooksRouter);
 app.use("/deploy",strategyRouter);
+app.use("/strategy",strategyRouter);
 
 const PORT = (process.env.PORT || 5000);
 

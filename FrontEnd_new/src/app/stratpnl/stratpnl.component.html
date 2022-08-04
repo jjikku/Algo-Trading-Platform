@@ -1,0 +1,47 @@
+
+<div class="container mr-auto ml-auto">
+
+    <h2>Strategy Position Details</h2>
+    <div class="table-responsive">          
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Strike</th>
+          <th>Type</th>
+          <th>Expiry</th>
+          <th>Qty</th>
+          <th>Entry Price</th>
+          <th>Ltp</th>
+          <th>PnL</th>
+
+        </tr>
+      </thead>
+      <tbody *ngFor="let i of inst">
+        <tr>
+            <td> {{ i.strike }} </td>
+            <td> {{ i.type }} </td>
+            <td> {{ i.expiry }} </td>
+            <td> {{ i.qty }} </td>
+            <td> {{ i.entryPrice }} </td>
+            <td> {{ i.LTP }} </td>
+            <td [style.color]="getColor(i.pnl)"
+            > {{ i.pnl }} </td>
+
+        </tr>
+        
+      </tbody>
+      <tr>
+        <th>Total</th>
+        <td> </td>
+        <td> </td>
+        <td> </td>
+        <td> </td>
+        <td> </td>
+        <td [style.color]="getColor(total)">{{ total }} </td>
+      </tr>
+    </table>
+    </div>
+    <button id="exitbtn" type="submit" class = "btn btn-danger btn-sm" style="float: right; margin-right: 25px" (click)="exitStrategy()"> Exit </button>
+
+  </div>
+  

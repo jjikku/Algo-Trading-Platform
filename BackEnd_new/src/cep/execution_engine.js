@@ -237,11 +237,11 @@ async function execution_engine(strategy,res) {
         async function placeOrder(buy_sell, qty, inst_id) {
           var buy_or_sell = buy_sell == "s" ? "SELL" : "BUY";
           order = { inst: inst_id, buy_sell: buy_or_sell, qty: qty };
-        //     TRADE_EXECUTION.executetrade(
-        //     inst_id,
-        //     25 * parseInt(qty),
-        //     buy_or_sell
-        //   );
+            TRADE_EXECUTION.executetrade(
+            inst_id,
+            25 * parseInt(qty),
+            buy_or_sell
+          );
           push_order_array(order);
         }
       },

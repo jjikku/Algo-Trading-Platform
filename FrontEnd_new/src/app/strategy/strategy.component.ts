@@ -15,8 +15,7 @@ export class StrategyComponent implements OnInit {
   strategy = [{
     _id:Number,
     stratname:String,
-    strategy:String,
-    about:String
+    strategy:String
   }
   ]
 
@@ -43,4 +42,12 @@ export class StrategyComponent implements OnInit {
     });
   }
 
+  deleteStrategy(id:any){
+    this.strategyservice.deletestrategy(id)
+    .subscribe((data) => {
+      alert("Strategy Deleted");
+      this.router.navigate(['/strategy']);
+      window.location.reload();
+    });
+  }
 }

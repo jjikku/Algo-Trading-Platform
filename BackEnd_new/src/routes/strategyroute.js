@@ -37,6 +37,8 @@ function verifyToken(req,res,next) {
 
 
 strategyRouter.post("/addstrategy", function (req, res) {
+  exitRoute = 1;
+
     var newstrategy = {
       stratname:req.body.strat.stratname,
       strategy:req.body.strat.strategy
@@ -53,6 +55,8 @@ strategyRouter.post("/addstrategy", function (req, res) {
    strategyRouter.get("/",verifyToken, function(req,res){
     //console.log(req.params.email);
     //booksRouter.get("/", function(req,res){
+    exitRoute = 1;
+
     console.log(req.originalUrl);
     console.log("strategy router");
      //console.log(checkuser);

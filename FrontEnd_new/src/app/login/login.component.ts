@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginperformedService } from 'src/services/loginperformed.service';
 import { Router } from '@angular/router';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/services/auth.service';
 import { UserService } from 'src/services/user.service';
 
@@ -12,7 +12,7 @@ import { UserService } from 'src/services/user.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor( private userService: UserService, public _auth: AuthService, private _login:LoginperformedService, private _loginForm: FormBuilder, private router:Router) { }
+  constructor( private userService: UserService, public _auth: AuthService, private _login:LoginperformedService, private _loginForm: UntypedFormBuilder, private router:Router) { }
   loginForm = this._loginForm.group({
     email: ["",[Validators.required, Validators.pattern("^([a-zA-Z0-9\-\._]+)@([A-Za-z\-]+)\.([a-z]{2,3}(\.[a-z]{2,3})?)$")]],
     pwd: ["",[Validators.required,Validators.minLength(8)]]
@@ -46,9 +46,9 @@ export class LoginComponent implements OnInit {
         console.log("token set");
         console.log(data.token)
         console.log(data.fname);
-	this.userService.setuser(data.fname,data.isAdmin);
+	      this.userService.setuser(data.fname,data.isAdmin);
         //this.userService.setuser(data.isAdmin);
-	this.router.navigate(["/strategy"]);
+	      this.router.navigate(["/home"]);
         // if (data.isAdmin==0)
         // {
         //   this.router.navigate(["/books"]);

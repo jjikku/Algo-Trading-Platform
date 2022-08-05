@@ -4,6 +4,8 @@ const strategyModel = require("../model/strategy.model");
 const { execution_engine } = require("../cep/execution_engine");
 const jwt = require("jsonwebtoken");
 
+
+
 function verifyToken(req,res,next) {
      const auth =  req.headers['authorization'];
      console.log("auth = " + auth);
@@ -31,6 +33,8 @@ function verifyToken(req,res,next) {
     req.userId = payload.subject;
     next();
   }
+
+
 
 strategyRouter.post("/addstrategy", function (req, res) {
     var newstrategy = {
@@ -70,7 +74,7 @@ strategyRouter.post("/addstrategy", function (req, res) {
     });
   
     // strategyRouter.get("/:id", verifyToken, function(req,res){
-      strategyRouter.get("/strategy/:id", function (req, res) {
+      strategyRouter.get("/:id", function (req, res) {
         //console.log(req.params.email);
         //booksRouter.get("/", function(req,res){
         console.log(req.originalUrl);
@@ -87,15 +91,9 @@ strategyRouter.post("/addstrategy", function (req, res) {
                       });
                   }
                   else{
-                      console.log('execution engine call');
-                      console.log(strategy.strategy);
-                  
-                      execution_engine(strategy.strategy);
-                      console.log('execution engine called');
-                      return res.status(200).send(strategy.strategy);
+                    console.log(strategy);
+                    res.send(strategy);
                   }
-      
-      
         }) 
       }
       catch (e) {
@@ -105,5 +103,47 @@ strategyRouter.post("/addstrategy", function (req, res) {
         }
       });
       
+      strategyRouter.delete("/:id", verifyToken, function(req,res){
+        console.log("stratgey delete router");
+         try{
+            const id = req.params.id;
+            strategyModel.findOneAndDelete({ _id: id })
+                .then(function () {
+                    res.send(req.body);
+            });                
+            }
+            catch(e)
+            {
+                console.log(e);
+                res.send(e);
+            }
+      });
+        
+        strategyRouter.post("/edit/:id", function (req, res) {
+  
+          var editedstrategy = {
+            stratname: req.body.strategy.stratname,
+            strategy: req.body.strategy.strategy
+          };
+         
+          //var editedstrategyNEW = new strategyModel(editedstrategy);
+          //console.log(editedstrategy)
+          //console.log(req.params.id)
+
+          strategyModel.findByIdAndUpdate(
+            req.params.id,
+            { $set: editedstrategy },
+            function (err, data) {
+              if (err) {
+                res.status(401).send(err);
+                console.log(err)
+              } else {
+                res.send(data);
+                console.log(data);
+              }
+            }
+          );
+        })
+       
       
         module.exports=strategyRouter;

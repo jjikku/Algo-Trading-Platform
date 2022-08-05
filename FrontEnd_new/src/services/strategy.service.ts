@@ -12,6 +12,17 @@ export class StrategyService{
     }
     getstrategy(id:any)
     {
-        return this.http.get("http://localhost:5000/strategy"+id);
+             return this.http.get("http://localhost:5000/strategy/"+id);
+    }
+    deletestrategy(id:any)
+    {   
+        console.log("H")
+      return this.http.delete<any>("http://localhost:5000/strategy/"+id);
+  
+    }
+    editStrategy(id:any, strategy:any)
+    {   
+        console.log("editstrategy service = "+id,strategy)
+        return this.http.post("http://localhost:5000/strategy/edit/"+id,{"strategy":strategy});
     }
 }

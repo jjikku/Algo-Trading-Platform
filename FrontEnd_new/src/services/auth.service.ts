@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient ,HttpBackend, HttpResponse } from '@angular/common/http'
 import { Router } from '@angular/router';
+import { StratpnlService } from "src/services/stratpnl.service";
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
 export class AuthService {
 
 
-  constructor(private http:HttpClient, private router: Router) { };
+  constructor(private _stratPnlService:StratpnlService ,private http:HttpClient, private router: Router) { };
   
   
   
@@ -30,7 +31,16 @@ export class AuthService {
   logOut()
   {
     console.log("logout");
+    this._stratPnlService.exitStrategy()
+    .subscribe((res) => {
+      console.log(res);
+      
+    })
+    alert("All running strategy positions are exited");
+
     localStorage.removeItem("token");
     this.router.navigate(["/login"]);
+
+    
   }
 }

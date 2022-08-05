@@ -146,7 +146,7 @@ async function API_Md_login (xtsMarketDataAPI) {
       publishFormat: 'JSON',
     };
   }
-  
+
   var getQuotes = async function (getQuotesRequest) {
     //console.log(getQuotesRequest)
     let response = await xtsMarketDataAPI.getQuotes(getQuotesRequest);
@@ -154,8 +154,13 @@ async function API_Md_login (xtsMarketDataAPI) {
    
       //console.log("LTP response = " + response);
 
-    
-    LTP = (JSON.parse(response.result.listQuotes))['LastTradedPrice'];
+    try{
+      LTP = (JSON.parse(response.result.listQuotes))['LastTradedPrice'];
+
+    }
+    catch(e) {
+      console.log(e);
+    }
     //console.log('LTP in = ' + LTP);
   
   };

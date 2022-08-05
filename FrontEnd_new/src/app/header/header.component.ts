@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/services/auth.service';
 import { UserService } from 'src/services/user.service';
+import { StratpnlService } from "src/services/stratpnl.service";
 
 @Component({
   selector: 'app-header',
@@ -10,7 +11,7 @@ import { UserService } from 'src/services/user.service';
 export class HeaderComponent implements OnInit {
   username:any;
   IsAdm:any;
-  constructor(private userService: UserService, public _auth: AuthService) { }
+  constructor(public _stratPnlService: StratpnlService, private userService: UserService, public _auth: AuthService) { }
 
   ngOnInit(): void {
     

@@ -60,7 +60,7 @@
                   <a class="nav-link" *ngIf="!_auth.loggedIn()" routerLink="/signup" routerLinkActive="active">Sign Up</a>
                 </li>
                 <li class="nav-item active">
-                  <a class="nav-link" style="cursor:pointer" *ngIf="_auth.loggedIn()" routerLinkActive="active" (click)="_auth.logOut()">Logout</a>
+                  <a class="nav-link" style="cursor:pointer" *ngIf="_auth.loggedIn()" routerLinkActive="active" (click)="_auth.logOut();">Logout</a>
                 </li>
               </ul>
               <!-- Links -->

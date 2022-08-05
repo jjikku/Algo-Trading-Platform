@@ -29,7 +29,7 @@ export class StratpnlComponent implements OnInit {
     },
   ];
   
-  total = 0;
+  total:Number = 0;
 
   public params: any;
   public position_detail: any;
@@ -76,13 +76,13 @@ export class StratpnlComponent implements OnInit {
         const exit_price = parseFloat(position_detail.inst.split(":")[9]);
 
         const pnl_o =
-          exit_flag == 1
+          (exit_flag == 1
             ? buy_sell == "b"
               ? (entryPrice - exit_price) * qty_in
               : (exit_price - entryPrice) * qty_in
             : buy_sell == "s"
             ? (entryPrice - LTP) * qty_in
-            : (LTP - entryPrice) * qty_in;
+            : (LTP - entryPrice) * qty_in);
         const qty = buy_sell == "s" ? (exit_flag == 1 ? 0 : qty_in) * -1 : (exit_flag == 1 ? 0 : qty_in);
         const pnl = pnl_o.toFixed(2);
 
@@ -133,7 +133,7 @@ findSum() {
       const pnl = (element.pnl).toString(); 
       console.log('inside findsum pnl =' + pnl);
 
-      sum = parseInt(pnl) + sum;
+      sum = parseInt((parseInt(pnl) + sum).toFixed(2));
     });
     this.total = sum;
     console.log("total = " + this.total);
@@ -141,8 +141,11 @@ findSum() {
   }
 
   exitStrategy() {
-    alert("exit strategy called");
-    this.stratPnlService.exitStrategy();
+    this.stratPnlService.exitStrategy()
+    .subscribe(() => {
+      alert("All positions exited");
+
+    })
   }
 }
 

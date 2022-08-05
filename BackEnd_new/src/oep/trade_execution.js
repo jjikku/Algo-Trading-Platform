@@ -1,6 +1,3 @@
-//const VALIDATOR = require('validator');
-//const BOOK = require('mongoose').model('Book');
-//const USER = require('mongoose').model('User');
 var XTSInteractive = require('xts-interactive-api').Interactive;
 var XTSInteractiveWS = require('xts-interactive-api').WS;
 var config = require('./config.json');
@@ -15,205 +12,90 @@ let userID = null;
 var xtsInteractive = null;
 var xtsInteractiveWS = null;
 
+async function executetrade(instrumentID, quantity, buy_sell) {
+        //creating the instance of XTSRest
+        xtsInteractive = new XTSInteractive(url);
+        //calling the logIn API
+        var loginRequest = {secretKey,appKey,source,};
+        let logIn = await xtsInteractive.logIn(loginRequest);
+        // checking for valid loginRequest
+        if (logIn && logIn.type == xtsInteractive.responseTypes.success) {
+            //creating the instance of XTSInteractiveWS
+            xtsInteractiveWS = new XTSInteractiveWS(url);
+            userID = logIn.result.userID;
+            //Instantiating the socket instance
+            // Token Generated after successful LogIn
+            var socketInitRequest = {userID: logIn.result.userID,token: logIn.result.token,};
+            xtsInteractiveWS.init(socketInitRequest);
+            //calling the remaining methods of the Interactive API
+            let executedorder = executeTradeAPI(instrumentID,quantity, buy_sell);
+            return executedorder;
 
-module.exports = {
+        } else {
+            //In case of failure
+            console.error(logIn);
+        }
+    }
+    async function executeTradeAPI(instrumentID,quantity, buy_sell) 
+    {
+        let placeOrderRequest = {
+        exchangeSegment: 'NSECM', //''NSECM
+        exchangeInstrumentID: instrumentID, //"SBIN-EQ", //22, BANKNIFTY 28JUL29SEP SPD
+        productType: 'MIS', //THIS IS FOR INTRADAY
+        orderType: 'MARKET',
+        orderSide: buy_sell,
 
-    getTradeDetails: (req, res) => {
-        (async () => {
-            //creating the instance of XTSRest
-            xtsInteractive = new XTSInteractive(url);
-            
-            //calling the logIn API
-            var loginRequest = {secretKey,appKey,source,};
-            let logIn = await xtsInteractive.logIn(loginRequest);
-                      
-            // checking for valid loginRequest
-            if (logIn && logIn.type == xtsInteractive.responseTypes.success) {
-              //creating the instance of XTSInteractiveWS
-              xtsInteractiveWS = new XTSInteractiveWS(url);
-              userID = logIn.result.userID;
-              //Instantiating the socket instance
-               // Token Generated after successful LogIn
-              var socketInitRequest = {userID: logIn.result.userID,token: logIn.result.token,};
-              xtsInteractiveWS.init(socketInitRequest);
-              //Registering the socket Events
-              await registerEvents();
-              //calling the remaining methods of the Interactive API
-              getTradeAPI();
-            } else {
-              //In case of failure
-              console.error(logIn);
-            }
-          })();
+        timeInForce: 'DAY',
+        disclosedQuantity: 0,
+        orderQuantity: quantity,
+        limitPrice: 2000,
+        stopPrice: 0,
+        orderUniqueIdentifier: '45485',
+        clientID: userID
+        };
 
-          async function getTradeAPI() 
-          {
-            reqObject = {clientID: userID,};
-            await getTradeBook(reqObject);
-          }
-          
-          var getTradeBook = async function (reqObject) {
-            let response = await xtsInteractive.getTradeBook();
-            //console.log(response);
-              // return res.status(200).json({
-              //     message: 'Trade retrieved sucessfully!',
-              //     data: response
-              // });
-          };
-    },
-
-    getorderdetails: (req, res) => {
-        (async () => {
-            //creating the instance of XTSRest
-
-            
-            xtsInteractive = new XTSInteractive(url);
-            
-            //calling the logIn API
-            var loginRequest = {secretKey,appKey,source,};
-            let logIn = await xtsInteractive.logIn(loginRequest);
-                      
-            // checking for valid loginRequest
-            if (logIn && logIn.type == xtsInteractive.responseTypes.success) {
-              //creating the instance of XTSInteractiveWS
-              xtsInteractiveWS = new XTSInteractiveWS(url);
-              userID = logIn.result.userID;
-              //Instantiating the socket instance
-               // Token Generated after successful LogIn
-              var socketInitRequest = {userID: logIn.result.userID,token: logIn.result.token,};
-              xtsInteractiveWS.init(socketInitRequest);
-              //Registering the socket Events
-              await registerEvents();
-              //calling the remaining methods of the Interactive API
-              getOrderAPI();
-            } else {
-              //In case of failure
-              console.error(logIn);
-            }
-          })();
-
-          async function getOrderAPI() 
-          {
-            reqObject = {clientID: userID,};
-            await getOrderBook();
-          }
-          
-          var getOrderBook = async function () {
-            let response = await xtsInteractive.getOrderBook();
-            //console.log(response);
-            //return response;
-            // return res.status(200).json({
-            //     message: 'Order retrieved sucessfully!',
-            //     data: response
-            // });
-          };
-    },
-
-    executetrade: (req, res, buy_sell) => {
-        (async () => {
-            //creating the instance of XTSRest
-            xtsInteractive = new XTSInteractive(url);
-            //calling the logIn API
-            var loginRequest = {secretKey,appKey,source,};
-            let logIn = await xtsInteractive.logIn(loginRequest);
-                      
-            // checking for valid loginRequest
-            if (logIn && logIn.type == xtsInteractive.responseTypes.success) {
-              //creating the instance of XTSInteractiveWS
-              xtsInteractiveWS = new XTSInteractiveWS(url);
-              userID = logIn.result.userID;
-              //Instantiating the socket instance
-               // Token Generated after successful LogIn
-              var socketInitRequest = {userID: logIn.result.userID,token: logIn.result.token,};
-              xtsInteractiveWS.init(socketInitRequest);
-              //Registering the socket Events
-              //await registerEvents();
-              //calling the remaining methods of the Interactive API
-              executeTradeAPI();
-            } else {
-              //In case of failure
-              console.error(logIn);
-            }
-          })();
-
-          async function executeTradeAPI() 
-          {
-            console.log("Trade execution = " + req + " : " + res + " : " + buy_sell);
-
-            let placeOrderRequest = {
-                //exchangeSegment: 'NSECM',
-                exchangeSegment: 'NSEFO',
-
-                exchangeInstrumentID: req, //"SBIN-EQ", //22, BANKNIFTY 28JUL29SEP SPD
-                productType: 'MIS', //THIS IS FOR INTRADAY
-                orderType: 'MARKET',
-                //orderSide: 'BUY',
-                orderSide: buy_sell,
-
-                timeInForce: 'DAY',
-                disclosedQuantity: 0,
-                orderQuantity: res,
-                limitPrice: 2000,
-                stopPrice: 0,
-                orderUniqueIdentifier: '45485',
-                clientID: userID
-              };
-            //  //place order
-              await placeOrder(placeOrderRequest);
-          }
-
-          var placeOrder = async function (placeOrderRequest) {
-            let response = await xtsInteractive.placeOrder(placeOrderRequest);
-            //console.log(response);
-            // return res.status(200).json({
-            //     message: 'Order placed sucessfully!',
-            //     data: response
-            // });
-          };
+        let response =await placeOrder(placeOrderRequest);
+        return response; 
     }
 
-};
+    var placeOrder = async function (placeOrderRequest) {
+        let tradeprice = 0;
+        let responseorder = await xtsInteractive.placeOrder(placeOrderRequest);
+        var orderype =  responseorder.type;
 
-var registerEvents = async function () {
-    //instantiating the listeners for all event related data
-  
-    //"connect" event listener
-    xtsInteractiveWS.onConnect((connectData) => {
-      console.log(connectData);
-    });
-  
-    //"joined" event listener
-    xtsInteractiveWS.onJoined((joinedData) => {
-      console.log(joinedData);
-    });
-  
-    //"error" event listener
-    xtsInteractiveWS.onError((errorData) => {
-      console.log(errorData);
-    });
-  
-    //"disconnect" event listener
-    xtsInteractiveWS.onDisconnect((disconnectData) => {
-      console.log(disconnectData);
-    });
-  
-    //"order" event listener
-    xtsInteractiveWS.onOrder((orderData) => {
-      console.log(orderData);
-    });
-  
-    //"trade" event listener
-    xtsInteractiveWS.onTrade((tradeData) => {
-      console.log(tradeData);
-    });
-  
-    //"position" event listener
-    xtsInteractiveWS.onPosition((positionData) => {
-      console.log(positionData);
-    });
-  
-    //"logout" event listener
-    xtsInteractiveWS.onLogout((logoutData) => {
-      console.log(logoutData);
-    });
-  };
+        if(orderype=="success"){
+            tradeprice = await getOrderAPI(responseorder.result.AppOrderID);
+        }
+        else{
+            tradeprice =  ({
+                message: 'error occured!',
+                executionPrice:0,
+                apporderNo:'',
+                data:responseorder
+            });
+        }
+        return tradeprice;
+    }
+
+    async function getOrderAPI(appOrderID) 
+    {
+        let response = await xtsInteractive.getOrderBook();
+        var tradetype =  response.type;
+        var tradeexecutedprice = 0;
+
+        if(tradetype=="success"){
+            var orderdetailsfind = response.result;
+            for(i=0;i<orderdetailsfind.length;i++)
+            {
+                if(appOrderID == orderdetailsfind[i].AppOrderID){
+                    tradeexecutedprice = orderdetailsfind[i].OrderAverageTradedPrice;
+                }
+            }
+        }
+        return ({
+            message: 'Order placed sucessfully!',
+            executionPrice:tradeexecutedprice,
+            apporderNo:appOrderID
+        });
+    }
+module.exports = {executetrade}

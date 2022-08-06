@@ -31,8 +31,9 @@ deployRouter.get("/exit", function (req, res) {
     exitRoute = 1;
     
     console.log("exitRoute = " + exitRoute);
-
-    res.status(200).send("Exited all positions");
+    return res.status(200).json({
+      message: "Exited all positions",
+    });
 });
 
  //deployRouter.get("/:id", verifyToken, function(req,res){
@@ -47,7 +48,6 @@ deployRouter.get("/:id", function (req, res) {
   };
   res.writeHead(200, headers);
   //res.setHeader("Content-Type", "text/event-stream");
-  res.write("data : " + "Hello" +"\n\n");
 
   console.log(req.originalUrl);
   console.log("Deploy router");

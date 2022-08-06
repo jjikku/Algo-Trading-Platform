@@ -2,12 +2,14 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { StratpnlService } from "src/services/stratpnl.service";
 import { Router } from "@angular/router";
-import { Observable, interval, startWith } from "rxjs";
+import { NgForOf, NgIf } from "@angular/common";
 
 @Component({
+  //standalone: true,
   selector: "app-stratpnl",
   templateUrl: "./stratpnl.component.html",
   styleUrls: ["./stratpnl.component.css"],
+  // imports: [NgIf, NgForOf]
 })
 export class StratpnlComponent implements OnInit {
   pnl: any;
@@ -26,21 +28,21 @@ export class StratpnlComponent implements OnInit {
       LTP: Number,
       qty: Number,
       pnl: Number
-    },
+    }
   ];
   
   total:Number = 0;
 
   public params: any;
   public position_detail: any;
-
+  public si_id:any;
   ngOnInit(): void {
     this.params = this._ActivatedRoute.snapshot.paramMap.get("id");
     console.log("Params Strategy PNL Route = " + this.params);
     this.getPositions();
-    setInterval(() => {
-      this.findSum(); 
-    }, 1000);
+    // this.si_id = setInterval(() => {
+    //   //this.findSum(); 
+    // }, 1000);
 
   }
 
@@ -83,7 +85,7 @@ export class StratpnlComponent implements OnInit {
             : buy_sell == "s"
             ? (entryPrice - LTP) * qty_in
             : (LTP - entryPrice) * qty_in);
-        const qty = buy_sell == "s" ? (exit_flag == 1 ? 0 : qty_in) * -1 : (exit_flag == 1 ? 0 : qty_in);
+        const qty = buy_sell == "s" ? ((exit_flag == 1 ? 0 : qty_in) * -1) : (exit_flag == 1 ? 0 : qty_in);
         const pnl = pnl_o.toFixed(2);
 
         console.log("qty = " + qty);
@@ -100,12 +102,7 @@ export class StratpnlComponent implements OnInit {
           qty,
           pnl
         };
-        // inst[index].strike = strike;
-        // inst[index].type = type;
-        // inst[index].expiry = expiry;
-        // inst[index].entryPrice = entryPrice;
-        // inst[index].LTP = LTP;
-        //console.log(inst[index]);
+        
       });
     }
     function getEventSource(url: string): EventSource {
@@ -133,7 +130,7 @@ findSum() {
       const pnl = (element.pnl).toString(); 
       console.log('inside findsum pnl =' + pnl);
 
-      sum = parseInt((parseInt(pnl) + sum).toFixed(2));
+      sum = parseFloat((parseFloat(pnl) + sum).toFixed(2));
     });
     this.total = sum;
     console.log("total = " + this.total);
@@ -141,10 +138,12 @@ findSum() {
   }
 
   exitStrategy() {
-    this.stratPnlService.exitStrategy()
-    .subscribe(() => {
-      alert("All positions exited");
 
+    this.stratPnlService.exitStrategy()
+    .subscribe((res) => {
+      console.log(res);
+      //clearInterval(this.si_id);
+      alert("All positions exited");
     })
   }
 }

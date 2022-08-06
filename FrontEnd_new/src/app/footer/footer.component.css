@@ -6,7 +6,7 @@ footer{
     color: white;
     background: black;
     opacity:.75 !important;
-    
+    margin-bottom: 0;
 }
 /* 
 .container-fluid{

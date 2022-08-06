@@ -1,7 +1,6 @@
 const express = require("express");
 const strategyRouter = express.Router();
 const strategyModel = require("../model/strategy.model");
-const { execution_engine } = require("../cep/execution_engine");
 const jwt = require("jsonwebtoken");
 
 
@@ -58,7 +57,7 @@ strategyRouter.post("/addstrategy", function (req, res) {
     exitRoute = 1;
 
     console.log(req.originalUrl);
-    console.log("strategy router");
+    console.log("root strategy router");
      //console.log(checkuser);
      try{
         strategyModel.find({})
@@ -82,7 +81,7 @@ strategyRouter.post("/addstrategy", function (req, res) {
         //console.log(req.params.email);
         //booksRouter.get("/", function(req,res){
         console.log(req.originalUrl);
-        console.log("Strategy router");
+        console.log("id Strategy router");
         //console.log(checkuser);
         try {
           let strategyId = req.params.id;

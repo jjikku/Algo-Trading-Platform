@@ -1,10 +1,11 @@
+ <section>
 
 <div class="container mr-auto ml-auto">
 
     <h2>Strategy Position Details</h2>
     <div class="table-responsive">          
     <table class="table">
-      <thead>
+      <thead >
         <tr>
           <th>Strike</th>
           <th>Type</th>
@@ -16,20 +17,19 @@
 
         </tr>
       </thead>
-      <tbody *ngFor="let i of inst">
-        <tr>
-            <td> {{ i.strike }} </td>
-            <td> {{ i.type }} </td>
-            <td> {{ i.expiry }} </td>
-            <td> {{ i.qty }} </td>
-            <td> {{ i.entryPrice }} </td>
-            <td> {{ i.LTP }} </td>
-            <td [style.color]="getColor(i.pnl)"
-            > {{ i.pnl }} </td>
+     <tbody *ngFor="let j of inst;">
+  <tr>
+      <td> {{ j.strike }} </td>
+      <td> {{ inst[j].type }} </td>
+      <td> {{ inst[j].expiry }} </td>
+      <td> {{ inst[j].qty }} </td>
+      <td> {{ inst[j].entryPrice }} </td>
+      <td> {{ inst[j].LTP }} </td>
+      <td [style.color]="getColor(inst[j].pnl)"
+      > {{ inst[j].pnl }} </td>
 
-        </tr>
-        
-      </tbody>
+  </tr>
+</tbody>
       <tr>
         <th>Total</th>
         <td> </td>
@@ -44,4 +44,87 @@
     <button id="exitbtn" type="submit" class = "btn btn-danger btn-sm" style="float: right; margin-right: 25px" (click)="exitStrategy()"> Exit </button>
 
   </div>
+</section>
+
+<section>
+
+  <div class="container mr-auto ml-auto">
   
+      <h2>Strategy Position Details</h2>
+      <div class="table-responsive">          
+      <table class="table">
+        <thead >
+          <tr>
+            <th>Strike</th>
+            <th>Type</th>
+            <th>Expiry</th>
+            <th>Qty</th>
+            <th>Entry Price</th>
+            <th>Ltp</th>
+            <th>PnL</th>
+  
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+              <td> {{ inst[0].strike }} </td>
+              <td> {{ inst[0].type }} </td>
+              <td> {{ inst[0].expiry }} </td>
+              <td> {{ inst[0].qty }} </td>
+              <td> {{ inst[0].entryPrice }} </td>
+              <td> {{ inst[0].LTP }} </td>
+              <td [style.color]="getColor(inst[0].pnl)"
+              > {{ inst[0].pnl }} </td>
+  
+          </tr>
+          <tr>
+            <td> {{ inst[1].strike }} </td>
+            <td> {{ inst[1].type }} </td>
+            <td> {{ inst[1].expiry }} </td>
+            <td> {{ inst[1].qty }} </td>
+            <td> {{ inst[1].entryPrice }} </td>
+            <td> {{ inst[1].LTP }} </td>
+            <td [style.color]="getColor(inst[1].pnl)"
+            > {{ inst[1].pnl }} </td>
+  
+        </tr>
+        <tr>
+          <td> {{ inst[2].strike }} </td>
+          <td> {{ inst[2].type }} </td>
+          <td> {{ inst[2].expiry }} </td>
+          <td> {{ inst[2].qty }} </td>
+          <td> {{ inst[2].entryPrice }} </td>
+          <td> {{ inst[2].LTP }} </td>
+          <td [style.color]="getColor(inst[2].pnl)"
+          > {{ inst[2].pnl }} </td>
+  
+      </tr>
+  
+      <tr>
+        <td> {{ inst[3].strike }} </td>
+        <td> {{ inst[3].type }} </td>
+        <td> {{ inst[3].expiry }} </td>
+        <td> {{ inst[3].qty }} </td>
+        <td> {{ inst[3].entryPrice }} </td>
+        <td> {{ inst[3].LTP }} </td>
+        <td [style.color]="getColor(inst[3].pnl)"
+        > {{ inst[3].pnl }} </td>
+  
+    </tr>
+  
+        </tbody>
+        <tr>
+          <th>Total</th>
+          <td> </td>
+          <td> </td>
+          <td> </td>
+          <td> </td>
+          <td> </td>
+          <td [style.color]="getColor(total)">{{ total }} </td>
+        </tr>
+      </table>
+      </div>
+      <button id="exitbtn" type="submit" class = "btn btn-danger btn-sm" style="float: right; margin-right: 25px" (click)="exitStrategy()"> Exit </button>
+  
+    </div>
+  </section>

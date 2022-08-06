@@ -11,6 +11,8 @@ import { SignupComponent } from './signup/signup.component';
 import { SinglebookComponent } from './singlebook/singlebook.component';
 import { SinglestrategyComponent } from './singlestrategy/singlestrategy.component';
 import { StrategyComponent } from './strategy/strategy.component';
+import { EditstrategyComponent } from './editstrategy/editstrategy.component';
+import { StratpnlComponent } from './stratpnl/stratpnl.component';
 
 const routes: Routes = [
   {path:"",component:HomeComponent,pathMatch: 'full'},
@@ -37,12 +39,20 @@ const routes: Routes = [
   pathMatch: 'full', 
   component:EditbookComponent
 },
-  {path:"addstrategy",    
+{
+    path: 'strategy/edit/:Id',
+    component: EditstrategyComponent
+},
+{path:"addstrategy",    
   // canActivate: [AuthGuard],
   pathMatch: 'full', 
   component:AddstrategyComponent
-}
-];
+},
+{path:"deploy/:id",    
+  // canActivate: [AuthGuard],
+  pathMatch: 'full', 
+  component:StratpnlComponent
+}];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

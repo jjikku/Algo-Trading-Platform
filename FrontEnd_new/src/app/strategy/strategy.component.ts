@@ -15,7 +15,8 @@ export class StrategyComponent implements OnInit {
   strategy = [{
     _id:Number,
     stratname:String,
-    strategy:String
+    strategy:String,
+    about:String
   }
   ]
 

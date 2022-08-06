@@ -34,7 +34,7 @@ function verifyToken(req,res,next) {
         //console.log(req.params.email);
             
         
-        console.log("Books router");
+        console.log("readmore router");
          //console.log(checkuser);
          try{
             booksModel.find({"_id":req.params.id})
@@ -57,7 +57,7 @@ function verifyToken(req,res,next) {
             //console.log(req.params.email);
                 
             
-            console.log("Books delete router");
+            console.log("strategy delete router");
              //console.log(checkuser);
              try{
                 const id = req.params.id;

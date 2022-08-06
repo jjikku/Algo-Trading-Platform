@@ -21,6 +21,10 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { StrategyComponent } from './strategy/strategy.component';
 import { AddstrategyComponent } from './addstrategy/addstrategy.component';
 import { SinglestrategyComponent } from './singlestrategy/singlestrategy.component';
+import { EditstrategyComponent } from './editstrategy/editstrategy.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxMaskModule } from 'ngx-mask';
+import { CommonModule } from '@angular/common'
 
 @NgModule({
   declarations: [
@@ -36,14 +40,20 @@ import { SinglestrategyComponent } from './singlestrategy/singlestrategy.compone
     EditbookComponent,
     StrategyComponent,
     AddstrategyComponent,
-    SinglestrategyComponent
+    SinglestrategyComponent,
+    EditstrategyComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    CommonModule,
+    NgxMaskModule.forRoot({
+			validation: true,
+		})
   ],
   providers: [AuthService, AuthGuard, 
   {

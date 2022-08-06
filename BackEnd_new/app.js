@@ -10,6 +10,7 @@ const editBooksRouter = require("./src/routes/editroute");
 //const singleBookRouter = require("./src/routes/singlebookroute");
 const strategyRouter = require('./src/routes/strategyroute');
 const singleStrategyRouter = require("./src/routes/singlestrategyroute");
+const deployRouter = require('./src/routes/deployroute');
 
 
 require('dotenv').config();
@@ -30,9 +31,9 @@ app.use("/signup", signupRouter);
 //app.use("/books", booksRouter);
 //app.use("/singlebook", singleBookRouter);
 //app.use("/editbook",editBooksRouter);
-app.use("/deploy",strategyRouter);
 app.use("/strategy",strategyRouter);
 app.use("/singlestrategy",singleStrategyRouter);
+app.use("/deploy",deployRouter);
 
 const PORT = (process.env.PORT || 5000);
 

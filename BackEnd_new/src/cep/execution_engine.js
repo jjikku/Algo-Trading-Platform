@@ -122,7 +122,13 @@ async function execution_engine(strategy,res) {
                 }
               }
             }
-            if (buy_sell[i] === "s") {
+              console.log('exit_ready before buy sell : =' + exit_ready);
+              console.log('flag before buy sell       : =' + flag[i]); 
+              console.log('exit flag before buy sell  : =' + exit_flag[i]); 
+              console.log('buy_sell before buy sell   : =' + buy_sell[i]);
+              exit_ready[i] = exitRoute ? 1 : exit_ready[i];
+
+            if (buy_sell[i] == "s") {
               exit_hrs[i] = parseInt(element.exit_time.split(":")[0]);
               exit_mins[i] = parseInt(element.exit_time.split(":")[1]);
               exit_secs[i] = parseInt(element.exit_time.split(":")[2]);
@@ -136,7 +142,7 @@ async function execution_engine(strategy,res) {
               curr_hrs[i] = parseInt(date_obj.getHours());
               curr_mins[i] = parseInt(date_obj.getMinutes());
               curr_secs[i] = parseInt(date_obj.getSeconds());
-              exit_ready[i] = exitRoute ? 1 :
+              exit_ready[i] = !exitRoute ? 
                 curr_hrs[i] > exit_hrs[i]
                   ? 1
                   : curr_hrs[i] == exit_hrs[i]
@@ -147,7 +153,7 @@ async function execution_engine(strategy,res) {
                       ? 1
                       : 0
                     : 0
-                  : 0;
+                  : 0 : 1;
 
               //      console.log('close:' + close);
               //      console.log('entry: = ' + entry_price);
@@ -166,7 +172,8 @@ async function execution_engine(strategy,res) {
 
                 exit_flag[i] = 1;
               }
-            } else if (buy_sell[i] === "b") {
+              
+            } else {
               exit_hrs[i] = parseInt(element.exit_time.split(":")[0]);
               exit_mins[i] = parseInt(element.exit_time.split(":")[1]);
               exit_secs[i] = parseInt(element.exit_time.split(":")[2]);
@@ -180,7 +187,7 @@ async function execution_engine(strategy,res) {
               curr_hrs[i] = parseInt(date_obj.getHours());
               curr_mins[i] = parseInt(date_obj.getMinutes());
               curr_secs[i] = parseInt(date_obj.getSeconds());
-              exit_ready[i] =
+              exit_ready[i] = !exitRoute ?
                 curr_hrs[i] > exit_hrs[i]
                   ? 1
                   : curr_hrs[i] == exit_hrs[i]
@@ -191,10 +198,10 @@ async function execution_engine(strategy,res) {
                       ? 1
                       : 0
                     : 0
-                  : 0;
+                  : 0 : 1;
 
               //      console.log('close:' + close);
-              //      console.log('entry: = ' + entry_price);
+                    
               if (
                 (LTP[i] <=
                   entry_price[i] * (1 - element.stop_loss_percentage / 100) ||
@@ -202,7 +209,7 @@ async function execution_engine(strategy,res) {
                 flag[i] &&
                 !exit_flag[i]
               ) {
-                buy_sell = "b";
+                buy_sell = "s";
                 //order[i] = {inst:ce_inst[i],strike:ce_strike[i],expiry:ce_expiry[i],buy_sell:buy_sell,qty:ce_qty[i]};
                 placeOrder(buy_sell, element.qty_in_lots, inst_id[i]);
                 push_order_array(order[i]);

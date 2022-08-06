@@ -1,0 +1,38 @@
+body{
+    background-size: cover;
+}
+.navbar{
+    background:rgb(0, 0, 0);
+    opacity: .75;
+    width:100%;
+}
+#strategy{
+    height: 200px;
+}
+.editstrategy{
+     width: 750px;
+    background: rgba(14, 12, 12, 0.8);
+    color: rgb(248, 239, 239);
+    margin-top: 100px;
+}
+.card
+{
+    width: 700px;
+    height:550px;
+    margin-top: 100px;
+    background: black;
+    opacity: .75;
+    color: white;
+}
+footer{
+    color: white;
+    background: black;
+    opacity:.75 !important;
+}
+a{
+    color: white;
+    text-decoration: none !important;
+}
+a:hover{
+    color: white;
+}

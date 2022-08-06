@@ -34,13 +34,13 @@ function verifyToken(req,res,next) {
         //console.log(req.params.email);
             
         
-        console.log("Books router");
+        console.log("ID Strategy router");
          //console.log(checkuser);
          try{
             strategyModel.find({"_id":req.params.id})
-            .then ((books) => {
-                console.log(books);
-                res.send(books);
+            .then ((strategy) => {
+                console.log(strategy);
+                res.send(strategy);
     
             });
             }

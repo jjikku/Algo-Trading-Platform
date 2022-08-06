@@ -55,6 +55,7 @@ export class StratpnlComponent implements OnInit {
     function getServerSentEvent(url: string, inst: any) {
       console.log("inside sse service");
       const eventSource = getEventSource(url);
+
       console.log("event source = ", eventSource);
       eventSource.onopen = function () {
         console.log("connection to stream has been opened");

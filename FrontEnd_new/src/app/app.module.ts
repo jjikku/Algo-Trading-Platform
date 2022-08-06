@@ -25,6 +25,7 @@ import { EditstrategyComponent } from './editstrategy/editstrategy.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxMaskModule } from 'ngx-mask';
 import { CommonModule } from '@angular/common'
+import {StratpnlComponent} from './stratpnl/stratpnl.component'
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { CommonModule } from '@angular/common'
     StrategyComponent,
     AddstrategyComponent,
     SinglestrategyComponent,
-    EditstrategyComponent
+    EditstrategyComponent,
+    StratpnlComponent
   ],
   imports: [
     BrowserModule,

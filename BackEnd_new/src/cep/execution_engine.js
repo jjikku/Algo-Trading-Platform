@@ -13,7 +13,7 @@ var order = [];
 global.exitRoute;
 
 // Loaded from DB on deploy
-function dummy_straddle() {var s, ce, pe;var set1 = set_n("09:16:00","15:25:00",40,"s","CE",37900,"2022-08-04",10);var set2 = set_n("09:16:00","15:25:00",40,"s","PE",37900,"2022-08-04",10);var set3 = set_n("09:20:00","15:20:00",60,"s","PE",38000,"2022-08-04",20);var set4 = set_n("09:25:00","15:20:00",60,"s","CE",38000,"2022-08-04",20);function set_n(entry_time,exit_time,stop_loss_percentage,buy_sell,ce_pe,strike,expiry,qty_in_lots) {var set_params = {entry_time: entry_time,buy_sell: buy_sell,exit_time: exit_time,stop_loss_percentage: stop_loss_percentage,ce_pe: ce_pe,strike: strike,expiry: expiry,qty_in_lots: qty_in_lots,};return set_params;}return [set1, set2, set3, set4];}
+//function dummy_straddle() {var s, ce, pe;var set1 = set_n("09:16:00","15:25:00",40,"s","CE",37900,"2022-08-04",10);var set2 = set_n("09:16:00","15:25:00",40,"s","PE",37900,"2022-08-04",10);var set3 = set_n("09:20:00","15:20:00",60,"s","PE",38000,"2022-08-04",20);var set4 = set_n("09:25:00","15:20:00",60,"s","CE",38000,"2022-08-04",20);function set_n(entry_time,exit_time,stop_loss_percentage,buy_sell,ce_pe,strike,expiry,qty_in_lots) {var set_params = {entry_time: entry_time,buy_sell: buy_sell,exit_time: exit_time,stop_loss_percentage: stop_loss_percentage,ce_pe: ce_pe,strike: strike,expiry: expiry,qty_in_lots: qty_in_lots,};return set_params;}return [set1, set2, set3, set4];}
 var flag = 0;
 async function execution_engine(strategy,res) {
  
@@ -158,12 +158,12 @@ async function execution_engine(strategy,res) {
               //      console.log('close:' + close);
               //      console.log('entry: = ' + entry_price);
               if (
-                (LTP[i] >=
-                  entry_price[i] * (element.stop_loss_percentage / 100 + 1) ||
-                  exit_ready[i]) &&
+                ((LTP[i] >= (entry_price[i] * (element.stop_loss_percentage / 100 + 1))) || 
+                (LTP[i] <= entry_price[i] * (1-(element.target_profit_percentage / 100))) ||
+                exit_ready[i]) &&
                 flag[i] &&
                 !exit_flag[i] 
-              ) {
+              )  {
                 let buy_sell = "b";
                 //order[i] = {inst:ce_inst[i],strike:ce_strike[i],expiry:ce_expiry[i],buy_sell:buy_sell,qty:ce_qty[i]};
                 await placeOrder(buy_sell, element.qty_in_lots, inst_id[i]);
@@ -203,9 +203,9 @@ async function execution_engine(strategy,res) {
               //      console.log('close:' + close);
                     
               if (
-                (LTP[i] <=
-                  entry_price[i] * (1 - element.stop_loss_percentage / 100) ||
-                  exit_ready[i]) &&
+                ((LTP[i] <=(entry_price[i] * (1 - element.stop_loss_percentage / 100))) ||
+                (LTP[i] >= entry_price[i] * (element.target_profit_percentage / 100)+1) ||
+                exit_ready[i]) &&
                 flag[i] &&
                 !exit_flag[i]
               ) {
@@ -245,14 +245,14 @@ async function execution_engine(strategy,res) {
           var buy_or_sell = buy_sell == "s" ? "SELL" : "BUY";
           order = { inst: inst_id, buy_sell: buy_or_sell, qty: qty };
           console.log("inst id order placement = " + inst_id);
-            TRADE_EXECUTION.executetrade(
+            await TRADE_EXECUTION.executetrade(
             inst_id,
             25 * parseInt(qty),
             buy_or_sell)
           .then(res => {
             console.log("Order price" + res.executionPrice);
             console.log("Order message" + res.message);
-
+            console.log("data =" + res.data);
           });
           push_order_array(order);
         }

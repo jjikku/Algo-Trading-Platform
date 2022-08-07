@@ -1,0 +1,91 @@
+const express = require("express");
+//const booksRouter = express.Router();
+const usersRouter = express.Router();
+const userModel = require("../model/users.model");
+const jwt = require("jsonwebtoken");
+
+function verifyToken(req,res,next) {
+     const auth =  req.headers['authorization'];
+     //console.log("auth = " + auth);
+    if(!auth)
+    {
+        console.log("No auth");
+      return res.status(200).send(req);
+    }
+    let token = auth.split(" ")[1];
+    if(token === "")
+    {
+        console.log("No token");
+
+      return res.status(401).send("Unauthorized Request");
+  
+    }
+    let payload = jwt.verify(token,"secretkey");
+    if(!payload)
+    {
+        console.log("No payload");
+
+      return res.status(401).send("Unauthorized Request");
+  
+    }
+    req.userId = payload.subject;
+    next();
+  }
+
+  usersRouter.post("/adduser", verifyToken, function (req, res) {
+    var newuser = {
+      fname: req.body.user.fname,
+      lname: req.body.user.lname,
+      email: req.body.user.email,
+      pwd: req.body.user.pwd
+     };
+
+    console.log("Add User Route")
+    console.log(req.body);
+    var adduser = new userModel(newuser);
+    adduser.save();
+    res.send(req.body);
+  });
+
+  usersRouter.get("/",verifyToken, function(req,res){
+    console.log("User List Function ");
+     //console.log(checkuser);
+     try{
+      userModel.find({})
+        .then ((users) => {
+            //console.log(books);
+            res.send(users);
+
+        });
+        }
+        catch(e)
+        {
+            console.log(e);
+            console.log("error");
+            res.send(e);
+        }
+
+    });
+  
+    usersRouter.get("/:id", verifyToken, function(req,res){
+        //console.log(req.params.email);
+       
+        console.log("User Find and Assign To Update Form");
+         //console.log(checkuser);
+         try{
+          userModel.findById({"_id":req.params.id})
+            .then ((users) => {
+                res.send((users));
+    
+            });
+            }
+            catch(e)
+            {
+                console.log(e);
+                console.log("error");
+                res.send(e);
+            }
+    
+        });
+
+module.exports = usersRouter;

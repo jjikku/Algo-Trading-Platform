@@ -27,6 +27,11 @@ import { NgxMaskModule } from 'ngx-mask';
 import { CommonModule } from '@angular/common'
 import {StratpnlComponent} from './stratpnl/stratpnl.component'
 
+import { UsersComponent } from './users/users.component';
+import { SingleuserComponent } from './singleuser/singleuser.component';
+//import { EdituserComponent } from './edituser/edituser.component';
+import { AdduserComponent } from './adduser/adduser.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +48,12 @@ import {StratpnlComponent} from './stratpnl/stratpnl.component'
     AddstrategyComponent,
     SinglestrategyComponent,
     EditstrategyComponent,
-    StratpnlComponent
+    StratpnlComponent,
+    UsersComponent,
+    SingleuserComponent,
+    //EdituserComponent,
+    AdduserComponent
+
   ],
   imports: [
     BrowserModule,

@@ -14,6 +14,13 @@ import { StrategyComponent } from './strategy/strategy.component';
 import { EditstrategyComponent } from './editstrategy/editstrategy.component';
 import { StratpnlComponent } from './stratpnl/stratpnl.component';
 
+
+import { AdduserComponent } from './adduser/adduser.component';
+import { SingleuserComponent } from './singleuser/singleuser.component';
+import { UsersComponent } from './users/users.component';
+//import { EdituserComponent } from './edituser/edituser.component';
+
+
 const routes: Routes = [
   {path:"",component:HomeComponent,pathMatch: 'full'},
   {path:"home",component:HomeComponent},
@@ -52,7 +59,38 @@ const routes: Routes = [
   // canActivate: [AuthGuard],
   pathMatch: 'full', 
   component:StratpnlComponent
-}];
+},
+{
+  path:"users",    
+  canActivate: [AuthGuard],
+  pathMatch: 'full', 
+  component:UsersComponent
+},
+{
+  path:"adduser",    
+  canActivate: [AuthGuard],
+  pathMatch: 'full', 
+  component:AdduserComponent
+},
+{  path:"singleuser",    
+   canActivate: [AuthGuard],
+   pathMatch: 'full',
+   component:SingleuserComponent
+},
+{
+  path:"singleuser/:id",    
+  canActivate: [AuthGuard],
+  pathMatch: 'full',
+  component:SingleuserComponent
+},
+// {
+//   path:"edituser/:id",   
+//   canActivate: [AuthGuard],
+//   pathMatch: 'full', 
+//   component:EdituserComponent
+// },
+
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

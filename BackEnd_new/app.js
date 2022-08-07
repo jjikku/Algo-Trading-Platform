@@ -12,6 +12,10 @@ const strategyRouter = require('./src/routes/strategyroute');
 const singleStrategyRouter = require("./src/routes/singlestrategyroute");
 const deployRouter = require('./src/routes/deployroute');
 
+const usersRouter = require("./src/routes/usersroute")
+const singleUserRouter = require("./src/routes/singleuserroute")
+const editUsersRouter = require("./src/routes/editusersroute")
+
 
 require('dotenv').config();
 

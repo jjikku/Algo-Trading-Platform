@@ -7,6 +7,7 @@
     <table class="table">
       <thead >
         <tr>
+          <th>Instrument</th>
           <th>Strike</th>
           <th>Type</th>
           <th>Expiry</th>
@@ -19,6 +20,7 @@
       </thead>
      <tbody *ngFor="let j of inst;">
   <tr>
+      <td> BANKNIFTY_OPTIDX </td>
       <td> {{ j.strike }} </td>
       <td> {{ j.type }} </td>
       <td> {{ j.expiry }} </td>
@@ -32,6 +34,7 @@
 </tbody>
       <tr>
         <th>Total</th>
+        <td></td>
         <td> </td>
         <td> </td>
         <td> </td>

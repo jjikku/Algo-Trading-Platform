@@ -25,7 +25,8 @@ export class EditstrategyComponent implements OnInit {
 
   strategy= {
     stratname:String,
-    strategy:String
+    strategy:String,
+    about:String
   }
   public params:any  
   ngOnInit(): void {
@@ -34,19 +35,20 @@ export class EditstrategyComponent implements OnInit {
       .subscribe(data => {
         this.strategy.stratname = JSON.parse(JSON.stringify(data)).stratname;
         this.strategy.strategy = JSON.parse(JSON.stringify(data)).strategy;
-        
+        this.strategy.about = JSON.parse(JSON.stringify(data)).about;
       });
   }
 
   editStrategy() {
     const stratname = this.strategy.stratname; //this.editStrategyForm.controls['stratname'].value;
     const strategy = this.strategy.strategy ; //this.editStrategyForm.controls['strategy'].value;
+    const about = this.strategy.about;
     const strategyCol = {
       stratname,
-      strategy
+      strategy,
+      about
     }
       console.log(strategyCol)
-
       this.editstrategyservice.editStrategy(this.params, strategyCol)
       .subscribe((data) => {
         if(data)

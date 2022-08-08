@@ -25,10 +25,22 @@
                 formControlName="exittime" name="exittime" type="text" placeholder="exit time">
             </td>
             <td>
-                <div>stop loss %</div>
-                <input class="form-control select" id="slperc" [showMaskTyped]="true" mask="00" 
-                [dropSpecialCharacters]="false"
-                formControlName="slperc" name="slperc" type="text" placeholder="stop loss percentage">
+                <table>
+                <tr>
+                <td>
+                    <div>stop loss %</div>
+                    <input class="form-control selectPerc" id="slperc" [showMaskTyped]="true" mask="00" 
+                    [dropSpecialCharacters]="false"
+                    formControlName="slperc" name="slperc" type="text" placeholder="stop loss percentage">
+                </td>
+                <td>
+                    <div>profit %</div>
+                    <input class="form-control selectPerc" id="profitperc" [showMaskTyped]="true" mask="00" 
+                    [dropSpecialCharacters]="false"
+                    formControlName="profitperc" name="profitperc" type="text" placeholder="stop loss percentage">
+                </td>
+                </tr>
+                </table>
             </td>
             <td>
                 <!-- <div>buy sell</div>
@@ -89,8 +101,14 @@
             </td>
         </tr>
         <tr>
+            <td colspan="4">
+                <div id="about">strategy Description</div>
+                <textarea id="about" mask="" [(ngModel)]="strategycriteria.about" formControlName="about" name="about" class="form-control rounded-0 " rows="3" placeholder="Description about strategy"></textarea>
+            </td>
+        </tr>
+        <tr>
             <td colspan="4" >
-                <textarea id="strategy" readonly [(ngModel)]="strategycriteria.strategy" formControlName="strategy" name="strategy" class="form-control rounded-0 " rows="3" placeholder="Description about strategy"></textarea>
+                <textarea id="strategy" mask="" readonly [(ngModel)]="strategycriteria.strategy" formControlName="strategy" name="strategy" class="form-control rounded-0 " rows="3" placeholder="Technical Details"></textarea>
             </td>
         </tr>
     </table> 

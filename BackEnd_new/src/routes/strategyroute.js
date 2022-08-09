@@ -40,7 +40,9 @@ strategyRouter.post("/addstrategy", function (req, res) {
 
     var newstrategy = {
       stratname:req.body.strat.stratname,
-      strategy:req.body.strat.strategy
+      strategy:req.body.strat.strategy,
+      about:req.body.strat.about,
+      emailid:req.body.strat.useremailid
       
      };
 
@@ -126,7 +128,8 @@ strategyRouter.post("/addstrategy", function (req, res) {
   
           var editedstrategy = {
             stratname: req.body.strategy.stratname,
-            strategy: req.body.strategy.strategy
+            strategy: req.body.strategy.strategy,
+            about: req.body.strategy.about
           };
          
           //var editedstrategyNEW = new strategyModel(editedstrategy);

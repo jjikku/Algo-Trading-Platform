@@ -12,10 +12,11 @@ const Schema = mongoose.Schema;
 const StrategySchema = new Schema({
   stratname: String,
   strategy: String,
-  about:String
+  about:String,
+  emailid:String
   //creationDate: { type: DATE, default: Date.now }
 });
-
+ 
 const strategyModel = mongoose.model("strategy", StrategySchema, "strategy");
 
 module.exports = strategyModel;

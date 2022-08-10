@@ -13,6 +13,8 @@ var NewSignupSchema = new Schema({
     lname:String,
     email:String,
     pwd:String,
+    blockstatus:Number,
+    userstatus:Number,
     isAdmin:Number	
 });
 

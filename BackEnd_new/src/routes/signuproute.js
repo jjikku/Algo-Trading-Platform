@@ -15,30 +15,30 @@ signupRouter.post("/", function (req, res) {
     lname:req.body.signup.lname,
     email:req.body.signup.email,
     pwd:req.body.signup.pwd,
-    isAdmin:0	 
-	
+    blockstatus:0,
+    userstatus:0,
+    isAdmin:0
    };
-  console.log("signup route")
-  console.log(newuser.email);
+  console.log("Signup Route")
   signupModel.findOne({ "email": newuser.email }, (error,user) => {
     console.log("error="+error);
-    console.log("user="+user);
+    // console.log("user="+user);
       if(error)
       {
         console.log(error);
       }
       else if(user)
       {
-        console.log("user exists");
+        console.log("This Email Id Exists");
         res.json({status:false});
       }
       else
       {
         var signup = new signupModel(newuser);
         signup.save((error,newuser) => {
-          console.log("saved");
+          console.log("User Saved");
           console.log("error= " + error);
-          console.log("new user=" + newuser);
+          console.log("New User=" + newuser);
           if(error)
           {
             console.log(error);

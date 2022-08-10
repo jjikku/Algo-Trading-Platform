@@ -15,7 +15,7 @@
                         <form (submit) = "editStrategy(strat._id)"
                         >
                         <input type="hidden" name="id" value="{{ strat._id }}">
-                        <button type="submit" class = "btn btn-success btn-sm" style="float: right;">Edit Strategy</button>
+                        <button type="submit" class = "btn btn-success btn-sm" style="float: right;" routerLink="/strategy/edit/{{strat._id}}">Edit Strategy</button>
                         
                       </form>
 

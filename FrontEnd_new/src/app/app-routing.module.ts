@@ -25,6 +25,7 @@ const routes: Routes = [
   {path:"",component:HomeComponent,pathMatch: 'full'},
   {path:"home",component:HomeComponent},
   {path:"login",component:LoginComponent},
+  {path:"googlelogin",component:LoginComponent},
   {path:"signup",component:SignupComponent},
   { path:"strategy",
     component:StrategyComponent,

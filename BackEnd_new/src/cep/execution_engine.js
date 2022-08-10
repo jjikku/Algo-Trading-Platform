@@ -5,7 +5,8 @@ const { getInstId } = require("../Api/data_adapter/adapter");
 const { getLTP } = require("../Api/data_adapter/adapter");
 const async = require("async");
 const set_n = require("./strategy_functions");
-const TRADE_EXECUTION = require("../oep/trade_execution");
+//const TRADE_EXECUTION = require("../oep/trade_execution");
+const {executeTradeAPI,getInteractiveAPI, InteractiveAPILogin } = require("../oep/trade_execution");
 
 
 const order_array = [];
@@ -13,7 +14,7 @@ var order = [];
 global.exitRoute;
 
 // Loaded from DB on deploy
-function dummy_straddle() {var s, ce, pe;var set1 = set_n("09:16:00","15:25:00",40,"s","CE",37900,"2022-08-04",10);var set2 = set_n("09:16:00","15:25:00",40,"s","PE",37900,"2022-08-04",10);var set3 = set_n("09:20:00","15:20:00",60,"s","PE",38000,"2022-08-04",20);var set4 = set_n("09:25:00","15:20:00",60,"s","CE",38000,"2022-08-04",20);function set_n(entry_time,exit_time,stop_loss_percentage,buy_sell,ce_pe,strike,expiry,qty_in_lots) {var set_params = {entry_time: entry_time,buy_sell: buy_sell,exit_time: exit_time,stop_loss_percentage: stop_loss_percentage,ce_pe: ce_pe,strike: strike,expiry: expiry,qty_in_lots: qty_in_lots,};return set_params;}return [set1, set2, set3, set4];}
+//function dummy_straddle() {var s, ce, pe;var set1 = set_n("09:16:00","15:25:00",40,"s","CE",37900,"2022-08-04",10);var set2 = set_n("09:16:00","15:25:00",40,"s","PE",37900,"2022-08-04",10);var set3 = set_n("09:20:00","15:20:00",60,"s","PE",38000,"2022-08-04",20);var set4 = set_n("09:25:00","15:20:00",60,"s","CE",38000,"2022-08-04",20);function set_n(entry_time,exit_time,stop_loss_percentage,buy_sell,ce_pe,strike,expiry,qty_in_lots) {var set_params = {entry_time: entry_time,buy_sell: buy_sell,exit_time: exit_time,stop_loss_percentage: stop_loss_percentage,ce_pe: ce_pe,strike: strike,expiry: expiry,qty_in_lots: qty_in_lots,};return set_params;}return [set1, set2, set3, set4];}
 var flag = 0;
 async function execution_engine(strategy,res) {
  
@@ -41,6 +42,9 @@ async function execution_engine(strategy,res) {
   let xts = await getxts();
   await API_Md_login(xts);
   await getMasterData(xts);
+  let xts_int = await getInteractiveAPI();
+  let xtslogin = await InteractiveAPILogin(xts_int);
+ 
 
   let F = new Function("return " + strategy)();
 
@@ -106,19 +110,21 @@ async function execution_engine(strategy,res) {
             entry_mins[i] = parseInt(element.entry_time.split(":")[1]);
             entry_secs[i] = parseInt(element.entry_time.split(":")[2]);
             if (curr_hrs[i] > entry_hrs[i] && !flag[i]) {
-              await placeOrder(element.buy_sell, element.qty_in_lots, inst_id[i]);
               flag[i] = 1;
-              entry_price[i] = LTP[i];
+              entry_price[i] = await placeOrder(element.buy_sell, flag[i] ? element.qty_in_lots : 0, inst_id[i]);
+
+              //entry_price[i] = LTP[i];
             } else if (curr_hrs[i] == entry_hrs[i] && !flag[i]) {
               if (curr_mins[i] > entry_mins[i]) {
-                await placeOrder(element.buy_sell, element.qty_in_lots, inst_id[i]);
                 flag[i] = 1;
+                await placeOrder(element.buy_sell, flag[i] ? element.qty_in_lots : 0, inst_id[i]);
+
                 entry_price[i] = LTP[i];
               } else if (curr_mins[i] == entry_mins[i]) {
                 if (curr_secs[i] >= entry_secs[i]) {
-                  await placeOrder(element.buy_sell, element.qty_in_lots, inst_id[i]);
                   flag[i] = 1;
-                  entry_price[i] = LTP[i];
+                  entry_price[i] = await placeOrder(element.buy_sell, flag[i] ? element.qty_in_lots : 0, inst_id[i]);
+                  //entry_price[i] = LTP[i];
                 }
               }
             }
@@ -158,17 +164,17 @@ async function execution_engine(strategy,res) {
               //      console.log('close:' + close);
               //      console.log('entry: = ' + entry_price);
               if (
-                (LTP[i] >=
-                  entry_price[i] * (element.stop_loss_percentage / 100 + 1) ||
-                  exit_ready[i]) &&
+                ((LTP[i] >= (entry_price[i] * (element.stop_loss_percentage / 100 + 1))) || 
+                (LTP[i] <= entry_price[i] * (1-(element.target_profit_percentage / 100))) ||
+                exit_ready[i]) &&
                 flag[i] &&
                 !exit_flag[i] 
-              ) {
+              )  {
                 let buy_sell = "b";
                 //order[i] = {inst:ce_inst[i],strike:ce_strike[i],expiry:ce_expiry[i],buy_sell:buy_sell,qty:ce_qty[i]};
-                await placeOrder(buy_sell, element.qty_in_lots, inst_id[i]);
+                exit_price[i] = await placeOrder(buy_sell, flag[i] ? element.qty_in_lots : 0, inst_id[i]);
                 push_order_array(order[i]);
-                exit_price[i] = LTP[i];
+                //exit_price[i] = LTP[i];
 
                 exit_flag[i] = 1;
               }
@@ -203,17 +209,17 @@ async function execution_engine(strategy,res) {
               //      console.log('close:' + close);
                     
               if (
-                (LTP[i] <=
-                  entry_price[i] * (1 - element.stop_loss_percentage / 100) ||
-                  exit_ready[i]) &&
+                ((LTP[i] <=(entry_price[i] * (1 - element.stop_loss_percentage / 100))) ||
+                (LTP[i] >= entry_price[i] * (element.target_profit_percentage / 100)+1) ||
+                exit_ready[i]) &&
                 flag[i] &&
                 !exit_flag[i]
               ) {
                 buy_sell = "s";
                 //order[i] = {inst:ce_inst[i],strike:ce_strike[i],expiry:ce_expiry[i],buy_sell:buy_sell,qty:ce_qty[i]};
-                await placeOrder(buy_sell, element.qty_in_lots, inst_id[i]);
+                exit_price[i] = await placeOrder(buy_sell, flag[i] ? element.qty_in_lots : 0, inst_id[i]);
                 push_order_array(order[i]);
-                exit_price[i] = LTP[i];
+                //exit_price[i] = LTP[i];
                 console.log("LTP after exit = " + LTP[i]);
                 exit_flag[i] = 1;
               }
@@ -245,16 +251,14 @@ async function execution_engine(strategy,res) {
           var buy_or_sell = buy_sell == "s" ? "SELL" : "BUY";
           order = { inst: inst_id, buy_sell: buy_or_sell, qty: qty };
           console.log("inst id order placement = " + inst_id);
-            TRADE_EXECUTION.executetrade(
+            order_details = await executeTradeAPI(
             inst_id,
             25 * parseInt(qty),
-            buy_or_sell)
-          .then(res => {
-            console.log("Order price" + res.executionPrice);
-            console.log("Order message" + res.message);
+            buy_or_sell,xts_int);
+            push_order_array(order);
+            console.log("TRADE EXECUTED PRICE = " + order_details.tradeprice );
+            return order_details.tradeprice;
 
-          });
-          push_order_array(order);
         }
       },
     });

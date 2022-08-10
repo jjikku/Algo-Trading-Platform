@@ -30,7 +30,7 @@ loginRouter.post("/",function(req,res){
                 else{
                     let payload = {subject: user._id};
                     let token = jwt.sign(payload,"secretkey");
-                    res.status(200).send({status:true,fname:user.fname,lname:user.lname,isAdmin:user.isAdmin,token});
+                    res.status(200).send({status:true,fname:user.fname,lname:user.lname,isAdmin:user.isAdmin,token,email:user.email});
                 }
             }
         });

@@ -10,11 +10,12 @@ body{
     height: 200px;
 }
 .editstrategy{
-     width: 750px;
-    background: rgba(14, 12, 12, 0.8);
-    color: rgb(248, 239, 239);
     margin-top: 100px;
-}
+    width: 55%;
+    background: rgba(217, 190, 190, 0.8);
+    color: #0d0909e0;
+    height: 90%;
+} 
 .card
 {
     width: 700px;
@@ -35,4 +36,8 @@ a{
 }
 a:hover{
     color: white;
+}
+#about{
+    text-align: left;
+    /* height: 2px; */
 }

@@ -13,7 +13,12 @@ export class LoginperformedService {
       return this.http.post<any>("http://localhost:5000/login",{"login":item})
 
   }
+  googleLogin(item:any)
+  {    
 
+      return this.http.post<any>("http://localhost:5000/googlelogin",{"login":item})
+
+  }
   
 }
 

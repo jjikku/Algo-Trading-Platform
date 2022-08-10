@@ -71,4 +71,11 @@ a:hover{
 .selected {
   background-color: red;
 }
-  
+.selectPerc{
+    height: 35px;
+    width: 130px;
+}
+#about{
+    text-align: left;
+    /* height: 2px; */
+}

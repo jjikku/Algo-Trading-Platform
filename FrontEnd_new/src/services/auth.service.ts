@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient ,HttpBackend, HttpResponse } from '@angular/common/http'
 import { Router } from '@angular/router';
 import { StratpnlService } from "src/services/stratpnl.service";
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { StratpnlService } from "src/services/stratpnl.service";
 export class AuthService {
 
 
-  constructor(private _stratPnlService:StratpnlService ,private http:HttpClient, private router: Router) { };
+  constructor(private _stratPnlService:StratpnlService ,private http:HttpClient, private router: Router,private socialAuthService: SocialAuthService) { };
   
   
   
@@ -37,6 +38,7 @@ export class AuthService {
       
     })
     alert("All running strategy positions are exited");
+    this.socialAuthService.signOut();
 
     localStorage.removeItem("token");
     this.router.navigate(["/login"]);

@@ -29,7 +29,7 @@ import {StratpnlComponent} from './stratpnl/stratpnl.component';
 import { SocialLoginModule,SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { environment } from 'src/environments/environment';
-
+import { AdduserComponent } from './adduser/adduser.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,8 +46,8 @@ import { environment } from 'src/environments/environment';
     AddstrategyComponent,
     SinglestrategyComponent,
     EditstrategyComponent,
-    StratpnlComponent
-    
+    StratpnlComponent,
+    AdduserComponent
    ],
   imports: [
     BrowserModule,

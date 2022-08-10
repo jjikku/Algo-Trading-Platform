@@ -2,3 +2,7 @@ body {
   background-image: url("../src/assets/images/stock.jpeg");
   background-size: cover;
 }
+
+.header2 {
+  margin-top: 60px;
+}

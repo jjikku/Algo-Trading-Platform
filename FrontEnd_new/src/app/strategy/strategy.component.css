@@ -3,7 +3,9 @@ body{
     background-size: cover;
     
   }
-
+.deck{
+    margin-top: 0%;
+}
 .navbar{
     background:rgb(0, 0, 0);
     opacity: .75;

@@ -1,6 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 declare const TradingView: any;
- 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -19,7 +18,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     new TradingView.widget(
 		{
 		"width": 1400,
-		"height": 700,
+		"height": 550,
 		"symbol": "BINANCE:BTCUSDT",
 		"interval": "5",
 		"timezone": "Asia/Kolkata",
@@ -55,6 +54,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
 		"container_id": "tradingview_dc27f"
 	  }
 		);
+		
+		
 	  }
 
 }

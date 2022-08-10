@@ -24,8 +24,11 @@ import { SinglestrategyComponent } from './singlestrategy/singlestrategy.compone
 import { EditstrategyComponent } from './editstrategy/editstrategy.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxMaskModule } from 'ngx-mask';
-import { CommonModule } from '@angular/common'
-import {StratpnlComponent} from './stratpnl/stratpnl.component'
+import { CommonModule } from '@angular/common';
+import {StratpnlComponent} from './stratpnl/stratpnl.component';
+import { SocialLoginModule,SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
+import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -44,7 +47,8 @@ import {StratpnlComponent} from './stratpnl/stratpnl.component'
     SinglestrategyComponent,
     EditstrategyComponent,
     StratpnlComponent
-  ],
+    
+   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -53,6 +57,7 @@ import {StratpnlComponent} from './stratpnl/stratpnl.component'
     ReactiveFormsModule,
     BrowserAnimationsModule,
     CommonModule,
+    SocialLoginModule,
     NgxMaskModule.forRoot({
 			validation: true,
 		})
@@ -62,7 +67,30 @@ import {StratpnlComponent} from './stratpnl/stratpnl.component'
     provide: HTTP_INTERCEPTORS,
     useClass: TokeninterceptorService,
     multi: true
-  }],
+  },
+  {
+    provide: 'SocialAuthServiceConfig',
+    useValue: {
+      autoLogin: false,
+      providers: [
+        {
+          id: GoogleLoginProvider.PROVIDER_ID,
+          provider: new GoogleLoginProvider(
+            environment.client_id
+          )
+        }
+        
+      ],
+      onError: (err) => {
+        console.error(err);
+      }
+    } as SocialAuthServiceConfig,
+  }
+  ],
+  
+
   bootstrap: [AppComponent]
 })
+
+
 export class AppModule { }

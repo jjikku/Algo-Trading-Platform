@@ -3,6 +3,7 @@ const path = require("path");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const loginRouter = require("./src/routes/loginroute");
+const googleLoginRouter = require("./src/routes/googleloginroute");
 const signupRouter = require("./src/routes/signuproute");
 const homeRouter = require("./src/routes/homeroute");
 //const booksRouter = require("./src/routes/booksroute");
@@ -26,6 +27,8 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "/public")));
 
 app.use("/login", loginRouter);
+app.use("/googlelogin", googleLoginRouter);
+
 app.use("/signup", signupRouter);
 //app.use("/home", homeRouter);
 //app.use("/books", booksRouter);

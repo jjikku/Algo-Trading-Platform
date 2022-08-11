@@ -30,6 +30,8 @@ import { SocialLoginModule,SocialAuthServiceConfig } from '@abacritt/angularx-so
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { environment } from 'src/environments/environment';
 import { AdduserComponent } from './adduser/adduser.component';
+import { SubscriptstrategyComponent } from './subscriptstrategy/subscriptstrategy.component'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,8 +49,9 @@ import { AdduserComponent } from './adduser/adduser.component';
     SinglestrategyComponent,
     EditstrategyComponent,
     StratpnlComponent,
-    AdduserComponent
-   ],
+    AdduserComponent,
+    SubscriptstrategyComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -81,16 +84,12 @@ import { AdduserComponent } from './adduser/adduser.component';
         }
         
       ],
-      onError: (err) => {
+      onError: (err:any) => {
         console.error(err);
       }
     } as SocialAuthServiceConfig,
   }
-  ],
-  
-
+],
   bootstrap: [AppComponent]
 })
-
-
 export class AppModule { }

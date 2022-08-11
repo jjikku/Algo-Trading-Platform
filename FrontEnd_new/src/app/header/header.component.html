@@ -47,7 +47,11 @@
                     >Strategy
                   </a>
                 </li>
-                
+                <li class="nav-item active">
+                  <a class="nav-link" *ngIf="_auth.loggedIn()" routerLink="/subscriptstrategy" routerLinkActive="active"
+                    >Subscription
+                  </a>
+                </li>
                 <li class="nav-item active">
                   <a class="nav-link" *ngIf="_auth.loggedIn()" routerLink="/addstrategy" routerLinkActive="active"
                     >Create Strategy

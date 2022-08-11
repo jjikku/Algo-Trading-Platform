@@ -19,7 +19,7 @@ import { AdduserComponent } from './adduser/adduser.component';
 import { SingleuserComponent } from './singleuser/singleuser.component';
 import { UsersComponent } from './users/users.component';
 //import { EdituserComponent } from './edituser/edituser.component';
-
+import { SubscriptstrategyComponent } from './subscriptstrategy/subscriptstrategy.component';
 
 const routes: Routes = [
   {path:"",component:HomeComponent,pathMatch: 'full'},
@@ -90,7 +90,11 @@ const routes: Routes = [
 //   pathMatch: 'full', 
 //   component:EdituserComponent
 // },
-
+{path:"subscriptstrategy",    
+  // canActivate: [AuthGuard],
+  pathMatch: 'full', 
+  component:SubscriptstrategyComponent
+}
 ];
 
 @NgModule({

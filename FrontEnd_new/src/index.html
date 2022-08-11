@@ -29,7 +29,7 @@
 <!-- TradingView Widget BEGIN -->
 <div class="header2 tradingview-widget-container">
   <div class=" tradingview-widget-container__widget"></div>
-  <div class=" tradingview-widget-copyright"><a href="https://in.tradingview.com/markets/" rel="noopener" target="_blank"><span class="blue-text">Markets</span></a> by TradingView</div>
+  <div class=" tradingview-widget-copyright"><a href="https://in.tradingview.com/markets/" rel="noopener" target="_blank"><span class="blue-text"></span></a></div>
   <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
   {
   "symbols"= [
@@ -81,6 +81,30 @@
 <!-- TradingView Widget END -->
   
   <app-root></app-root>
+
+<!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+  <div class="tradingview-widget-container__widget"></div>
+  <div class="tradingview-widget-copyright"><a href="https://in.tradingview.com/markets/indices/key-events/" rel="noopener" target="_blank"><span class="blue-text">Daily index news</span></a> by TradingView</div>
+  <script type="text/javascript">
+  {
+  "feedMode"= "market",
+  "market"= "index",
+  "colorTheme"= "dark",
+  "isTransparent"= false,
+  "displayMode"= "regular",
+  "width"= "1000",
+  "height"= "500",
+  "locale"= "in"
+}
+  </script>
+</div>
+<!-- TradingView Widget END -->
+
+
+
+
+
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </body>

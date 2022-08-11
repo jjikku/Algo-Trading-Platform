@@ -30,6 +30,10 @@ import { SocialLoginModule,SocialAuthServiceConfig } from '@abacritt/angularx-so
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { environment } from 'src/environments/environment';
 import { AdduserComponent } from './adduser/adduser.component';
+import { UsersComponent } from './users/users.component';
+import { NgnewsModule } from 'angular-news-api';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +51,8 @@ import { AdduserComponent } from './adduser/adduser.component';
     SinglestrategyComponent,
     EditstrategyComponent,
     StratpnlComponent,
-    AdduserComponent
+    AdduserComponent,
+    UsersComponent
    ],
   imports: [
     BrowserModule,
@@ -60,7 +65,8 @@ import { AdduserComponent } from './adduser/adduser.component';
     SocialLoginModule,
     NgxMaskModule.forRoot({
 			validation: true,
-		})
+		}),    
+
   ],
   providers: [AuthService, AuthGuard, 
   {

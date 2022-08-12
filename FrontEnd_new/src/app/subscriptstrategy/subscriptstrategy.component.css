@@ -1,0 +1,9 @@
+.deck{
+    margin-top: 100px;
+    margin-left: 280px;
+    margin-right: 280px;
+}
+ .card{
+    height: 450px;
+    width: 280px;
+} 

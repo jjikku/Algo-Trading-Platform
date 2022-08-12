@@ -1,4 +1,8 @@
+let emaillocal = "aneeshvdas@yahoo.co.in";
+let emailPasslocal = 'zznxbrqopbfdpqah'
 module.exports = {
+    EMAIL:emaillocal,
+    EMAILPASS:emailPasslocal,
     development: {
         connectionString: 'mongodb://localhost:27017/Algo_Trading_Platform',
         //connectionString: 'mongodb+srv://AneeshV:Aneesh*1234@cluster0.hdx3u.mongodb.net/BookStore'

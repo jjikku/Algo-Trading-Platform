@@ -16,7 +16,7 @@ const deployRouter = require('./src/routes/deployroute');
 const usersRouter = require("./src/routes/usersroute")
 const singleUserRouter = require("./src/routes/singleuserroute")
 const editUsersRouter = require("./src/routes/editusersroute")
-
+const UserPurchaseRoutes = require('./src/routes/userpurchase');
 
 require('dotenv').config();
 
@@ -41,6 +41,7 @@ app.use("/signup", signupRouter);
 app.use("/strategy",strategyRouter);
 app.use("/singlestrategy",singleStrategyRouter);
 app.use("/deploy",deployRouter);
+app.use('/userpurchase',UserPurchaseRoutes);
 
 const PORT = (process.env.PORT || 5000);
 

@@ -31,8 +31,8 @@ import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { environment } from 'src/environments/environment';
 import { AdduserComponent } from './adduser/adduser.component';
 import { UsersComponent } from './users/users.component';
-import { NgnewsModule } from 'angular-news-api';
-
+//import { NgnewsModule } from 'angular-news-api';
+import { SubscriptstrategyComponent } from './subscriptstrategy/subscriptstrategy.component'
 
 @NgModule({
   declarations: [
@@ -52,7 +52,8 @@ import { NgnewsModule } from 'angular-news-api';
     EditstrategyComponent,
     StratpnlComponent,
     AdduserComponent,
-    UsersComponent
+    UsersComponent,
+    SubscriptstrategyComponent
    ],
   imports: [
     BrowserModule,

@@ -150,6 +150,43 @@ strategyRouter.post("/addstrategy", function (req, res) {
             }
           );
         })
-       
-      
-        module.exports=strategyRouter;
+
+  strategyRouter.get("/ByUserId/:id&:isadmin", function (req, res) {
+    try {
+          const emailidno = req.params.id;
+          const isadmin = req.params.isadmin;
+          console.log(emailidno, isadmin);
+
+          if(isadmin == "1") {
+            console.log("isadmin 1")
+            strategyModel.find({}).then((strategy) => {
+
+              if (!strategy) {
+                    return res.status(400).json({
+                    message: 'There is no strategy for this user'
+                  });
+                  }
+              else{
+                    res.send(strategy);
+                  }
+            }) 
+          }
+          else{
+            strategyModel.find({emailid: emailidno}).then((strategy) => {
+            if (!strategy) {
+                  return res.status(400).json({
+                  message: 'There is no strategy for this user'
+                });
+                }
+            else{
+                  res.send(strategy);
+                }
+          }) 
+        }
+      }
+      catch (e) {
+        res.send(e);
+      }
+    })
+
+module.exports=strategyRouter;

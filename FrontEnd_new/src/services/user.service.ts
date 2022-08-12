@@ -19,14 +19,18 @@ export class UserService {
 
   }
   setuser(username:any,IsAdmin:any, email:any) {
+    localStorage.setItem("fname",username);
+
     this.fname = username;
     this.IsAdm = IsAdmin;
     this.userId = email;
-    //console.log(this.IsAdm);
+    //console.log("user service email = " + this.userId);
   }
   
   getuser() {
-    return this.fname;
+    return localStorage.getItem("fname");
+
+    //return this.fname;
     
   }
   getuserId() {

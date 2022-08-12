@@ -37,15 +37,45 @@ function verifyToken(req,res,next) {
       fname: req.body.user.fname,
       lname: req.body.user.lname,
       email: req.body.user.email,
-      pwd: req.body.user.pwd
+      pwd: req.body.user.pwd,
+      blockstatus:0,
+      userstatus:1,
+      isAdmin:0
      };
 
-    console.log("Add User Route")
-    console.log(req.body);
-    var adduser = new userModel(newuser);
-    adduser.save();
-    res.send(req.body);
+     console.log("Add User Route")
+     userModel.findOne({ "email": newuser.email }, (error,user) => {
+         if(error)
+         {
+           console.log(error);
+         }
+         else if(user)
+         {
+           console.log("This Email Id Exists");
+           res.json({status:false});
+         }
+         else
+         {
+          var adduser = new userModel(newuser);
+           adduser.save((error,newuser) => {
+             console.log("User Saved");
+             console.log("New User=" + newuser);
+             if(error)
+             {
+               console.log(error);
+               res.json({status:true});
+             }
+             else
+             {
+               res.json({status:true}).status(200);
+             }
+           } 
+           );
+         }
+     });
+
   });
+
 
   usersRouter.get("/",verifyToken, function(req,res){
     console.log("User List Function ");

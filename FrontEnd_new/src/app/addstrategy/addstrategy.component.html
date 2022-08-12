@@ -4,7 +4,7 @@
      <table class="mytable">
         <tr>
             <td colspan="4" > 
-                <input  id="stratname"  formControlName="stratname" name="stratname" type="text"  class="form-control mb-4" placeholder="Strategy Name">
+                <input  id="stratname" maxlength="250"  formControlName="stratname" name="stratname" type="text"  class="form-control mb-4" placeholder="Strategy Name">
             </td>
         </tr>
         <tr>
@@ -29,13 +29,13 @@
                 <tr>
                 <td>
                     <div>stop loss %</div>
-                    <input class="form-control selectPerc" id="slperc" [showMaskTyped]="true" mask="00" 
+                    <input class="form-control selectPerc" id="slperc" [showMaskTyped]="true" mask="000" 
                     [dropSpecialCharacters]="false"
                     formControlName="slperc" name="slperc" type="text" placeholder="stop loss percentage">
                 </td>
                 <td>
                     <div>profit %</div>
-                    <input class="form-control selectPerc" id="profitperc" [showMaskTyped]="true" mask="00" 
+                    <input class="form-control selectPerc" id="profitperc" [showMaskTyped]="true" mask="000" 
                     [dropSpecialCharacters]="false"
                     formControlName="profitperc" name="profitperc" type="text" placeholder="stop loss percentage">
                 </td>
@@ -103,7 +103,7 @@
         <tr>
             <td colspan="4">
                 <div id="about">strategy Description</div>
-                <textarea id="about" mask="" [(ngModel)]="strategycriteria.about" formControlName="about" name="about" class="form-control rounded-0 " rows="3" placeholder="Description about strategy"></textarea>
+                <textarea id="about" maxlength="700" mask="" [(ngModel)]="strategycriteria.about" formControlName="about" name="about" class="form-control rounded-0 " rows="3" placeholder="Description about strategy"></textarea>
             </td>
         </tr>
         <tr>

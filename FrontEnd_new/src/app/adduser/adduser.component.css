@@ -11,12 +11,12 @@ body{
 }
 
 .adduser{
-    margin-top: 70px;
+    margin-top: 5px;
     width: 750px;
-    height:560px;
+    height:500px;
     background: rgba(217, 190, 190, 0.8);
     color: #0d0909e0;
-    height: 90%;
+    height: 80%;
 }
   
   .card

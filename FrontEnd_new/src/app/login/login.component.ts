@@ -89,10 +89,11 @@ export class LoginComponent implements OnInit {
       }
       else
       {
-        localStorage.setItem("token",data.token)
+        localStorage.setItem("token",data.token);
         console.log("token set");
         console.log(data.token)
         console.log(data.fname);
+
 	      this.userService.setuser(data.fname,data.isAdmin,data.email);
         //this.userService.setuser(data.isAdmin);
 	      this.router.navigate(["/home"]);

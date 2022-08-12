@@ -20,7 +20,9 @@ export class HeaderComponent implements OnInit {
   getuser(){
     if(this._auth.loggedIn())
     {
-      this.username = this.userService.getuser();
+      this.username = localStorage.getItem("fname");
+
+      //this.username = this.userService.getuser();
       //console.log("header "+ this.username);
     }
   }

@@ -18,7 +18,7 @@ import { StratpnlComponent } from './stratpnl/stratpnl.component';
 import { AdduserComponent } from './adduser/adduser.component';
 import { SingleuserComponent } from './singleuser/singleuser.component';
 import { UsersComponent } from './users/users.component';
-//import { EdituserComponent } from './edituser/edituser.component';
+import { EdituserComponent } from './edituser/edituser.component';
 import { SubscriptstrategyComponent } from './subscriptstrategy/subscriptstrategy.component';
 
 const routes: Routes = [
@@ -84,12 +84,12 @@ const routes: Routes = [
   pathMatch: 'full',
   component:SingleuserComponent
 },
-// {
-//   path:"edituser/:id",   
-//   canActivate: [AuthGuard],
-//   pathMatch: 'full', 
-//   component:EdituserComponent
-// },
+{
+  path:"edituser/:id",   
+  canActivate: [AuthGuard],
+  pathMatch: 'full', 
+  component:EdituserComponent
+},
 {path:"subscriptstrategy",    
   // canActivate: [AuthGuard],
   pathMatch: 'full', 

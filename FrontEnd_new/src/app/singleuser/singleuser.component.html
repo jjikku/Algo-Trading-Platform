@@ -13,6 +13,14 @@
                         <br>
                         Email      : {{ users.email }}
                         <br>
+                        Usertype: {{  usertype }}
+                        <div *ngIf="singleuserservice.getUserAdminStatus()">
+                        <!-- <div *ngIf="show else elseblock">
+                        <ng-template #elseblock>  -->
+                          <h5>Ha</h5>
+                        <!-- </ng-template>-->
+                        </div> 
+                        
                         <br>
                         <form (submit) = "editUser(users._id)">
                         <input type="hidden" name="id" value="{{ users._id }}">
@@ -22,7 +30,7 @@
 
                         <form >
                         <input type="hidden" name="id" value="{{ users._id }}">
-                        <button id="dltbtn" type="submit" class = "btn btn-danger btn-sm" style="float: right; margin-right: 25px" (click)="deleteUser(users._id)">Delete </button>
+                        <button id="dltbtn" type="submit" class = "btn btn-danger btn-sm" style="float: right; margin-right: 25px" (click)="blockUser(users._id)">Block </button>
                         </form>
 
                         <form (submit) = "addUser()" >

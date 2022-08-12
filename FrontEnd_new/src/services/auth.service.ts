@@ -12,9 +12,6 @@ export class AuthService {
 
   constructor(private _stratPnlService:StratpnlService ,private http:HttpClient, private router: Router,private socialAuthService: SocialAuthService) { };
   
-  
-  
-
   loggedIn()
   {
     const token = localStorage.getItem('token');
@@ -42,6 +39,7 @@ export class AuthService {
 
     localStorage.removeItem("token");
     localStorage.removeItem("fname");
+    localStorage.removeItem("IsAdmin");
     localStorage.removeItem("email");
     this.router.navigate(["/login"]);
 

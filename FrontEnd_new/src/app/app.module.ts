@@ -30,9 +30,9 @@ import { SocialLoginModule,SocialAuthServiceConfig } from '@abacritt/angularx-so
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { environment } from 'src/environments/environment';
 import { AdduserComponent } from './adduser/adduser.component';
-import { UsersComponent } from './users/users.component';
-//import { NgnewsModule } from 'angular-news-api';
 import { SubscriptstrategyComponent } from './subscriptstrategy/subscriptstrategy.component'
+import { UsersComponent } from './users/users.component';
+import { EdituserComponent } from './edituser/edituser.component';
 
 @NgModule({
   declarations: [
@@ -52,9 +52,10 @@ import { SubscriptstrategyComponent } from './subscriptstrategy/subscriptstrateg
     EditstrategyComponent,
     StratpnlComponent,
     AdduserComponent,
+    SubscriptstrategyComponent,
     UsersComponent,
-    SubscriptstrategyComponent
-   ],
+    EdituserComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -66,8 +67,7 @@ import { SubscriptstrategyComponent } from './subscriptstrategy/subscriptstrateg
     SocialLoginModule,
     NgxMaskModule.forRoot({
 			validation: true,
-		}),    
-
+		})
   ],
   providers: [AuthService, AuthGuard, 
   {
@@ -88,16 +88,12 @@ import { SubscriptstrategyComponent } from './subscriptstrategy/subscriptstrateg
         }
         
       ],
-      onError: (err) => {
+      onError: (err:any) => {
         console.error(err);
       }
     } as SocialAuthServiceConfig,
   }
-  ],
-  
-
+],
   bootstrap: [AppComponent]
 })
-
-
 export class AppModule { }

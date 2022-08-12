@@ -41,7 +41,8 @@ export class LoginComponent implements OnInit {
       this._login.googleLogin(item)
     .subscribe((data:any) => {
       let status = data.status;
-      if(!status)
+
+      if(!status)      
       {
         alert("Incorrect Username/Password");
       }
@@ -83,17 +84,26 @@ export class LoginComponent implements OnInit {
     this._login.login(item)
     .subscribe((data) => {
       let status = data.status;
-      if(!status)
+      let blockstatus = data.blockstatus; // Blockuser Checking
+//      if(!status)
+      if(!status  && blockstatus==0)
+      {
+        alert("Incorrect Username/Password");
+      }
+      else if(!status && blockstatus==1) // For Block User Checking
+      {
+        alert("User Is Blocked");
+      }
+      else if(!status ) // New
       {
         alert("Incorrect Username/Password");
       }
       else
       {
-        localStorage.setItem("token",data.token);
+        localStorage.setItem("token",data.token)
         console.log("token set");
         console.log(data.token)
         console.log(data.fname);
-
 	      this.userService.setuser(data.fname,data.isAdmin,data.email);
         //this.userService.setuser(data.isAdmin);
 	      this.router.navigate(["/home"]);

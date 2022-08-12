@@ -24,6 +24,21 @@ export class SingleuserService {
     return this.http.delete<any>("http://localhost:5000/singleuser/"+id);
 
   }
+  blockUser(id:any,user:any)
+  {   
+    console.log("Block Service. "+user);
+    return this.http.post("http://localhost:5000/singleuser/block/"+id,{"user":user});
+
+  }
+  getUserAdminStatus(admstatus:any){
+    console.log(admstatus);
+    // if(admstatus==1)
+    // {
+    // return.this("Admin")
+    // }
+  
+  }
+
 }
 
 

@@ -25,4 +25,8 @@ export class StrategyService{
         console.log("editstrategy service = "+id,strategy)
         return this.http.post("http://localhost:5000/strategy/edit/"+id,{"strategy":strategy});
     }
+    getstrategybyUserId(id:any, isAdmin:any)
+    {
+        return this.http.get("http://localhost:5000/strategy/ByUserId/"+id+"&"+isAdmin);
+    }
 }

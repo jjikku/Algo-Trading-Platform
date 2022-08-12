@@ -41,6 +41,7 @@ export class AuthService {
     this.socialAuthService.signOut();
 
     localStorage.removeItem("token");
+    localStorage.removeItem("fname");
     this.router.navigate(["/login"]);
 
     

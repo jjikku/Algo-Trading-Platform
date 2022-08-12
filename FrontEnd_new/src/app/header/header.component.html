@@ -29,12 +29,12 @@
           <div class="ml-auto mr-auto text-center" *ngIf="_auth.loggedIn(); ngIfThen getuser();"> 
             <h3 class="userstyle"> Welcome {{ username }}  </h3>
           </div>
-          <div class="ml-auto mr-auto text-center" *ngIf="_auth.loggedIn(); ngIfThen getuserType();"> 
+          <!-- <div class="ml-auto mr-auto text-center" *ngIf="_auth.loggedIn(); ngIfThen getuserType()==='1';">  -->
             <!-- <h3 class="userstyle "> Welcome {{ username }} ! {{ IsAdm}} </h3> -->
-          </div>
+          <!-- </div> -->
               <ul class="navbar-nav ml-auto" >
                 <!-- <li class="nav-item active" *ngIf="username === 'Soorej'"> -->
-                <li class="nav-item active" *ngIf="IsAdm === 1">
+		<li class="nav-item active" *ngIf="_auth.loggedIn(); ngIfThen getuserType()==='1'">
                   <a class="nav-link" *ngIf="_auth.loggedIn()" routerLink="/users" routerLinkActive="active"
                     >Users
                   </a>

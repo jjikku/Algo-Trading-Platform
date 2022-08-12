@@ -10,9 +10,9 @@ constructor(private http:HttpClient) { }
 //addUserService(user:any)
 addUserService(item:any)
   {   
-    // return this.http.post("http://localhost:5000/users/adduser",{"user":user});
-    // console.log(item);
-    return this.http.post<any>("http://localhost:5000/signup",{"signup":item})
+    return this.http.post("http://localhost:5000/users/adduser",{"user":item});
+    //console.log(item);
+    // return this.http.post<any>("http://localhost:5000/signup",{"signup":item})
   }
 }
 

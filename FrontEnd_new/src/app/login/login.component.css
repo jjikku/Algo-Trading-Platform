@@ -7,38 +7,29 @@ body{
   .google_btn{
     color: white;
     size: large;
+    
   }
   .google_text{
     color: rgb(30, 77, 157);
     size: large;
   }
 
-/* .navbar{
-    background:rgb(0, 0, 0);
-    opacity: .75;
-    
-    width:100%;
-      
-} */
-
 h1{
     margin-top: 80px;
 }
 
 
-
 .main-section{
     margin: 0 auto;
-    margin-top: 0;
-    /* margin-left: 30px; */
+    margin-top: 0px;
     padding: 0;
 
 }
 
 .modal-content{
-    background-color: black;
+    background-color:rgba(217, 190, 190, 0.8);
     padding: 0 18px;
-    margin-top: 200px;
+    margin-top: 100px;
 }
 
 .user-img{
@@ -47,9 +38,9 @@ h1{
 }
 
 .user-img img{
-    height: 100px;
-    width: 100px;
-    border-radius: 5px;
+    height: 80px;
+    width: 80px;
+    border-radius: 10px;
 }
 
 button{

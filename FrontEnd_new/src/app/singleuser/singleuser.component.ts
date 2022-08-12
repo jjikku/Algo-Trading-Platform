@@ -15,7 +15,9 @@ import { number } from 'echarts';
   styleUrls: ['./singleuser.component.css']
 })
 export class SingleuserComponent implements OnInit {
-  public usertype:String=""
+  public userStatus:String=""
+  public createdUser:String=""
+  public userType:String=""
   constructor(private _ActivatedRoute:ActivatedRoute, private singleuserservice: SingleuserService, private router: Router,public _auth: AuthService) { }
   users = 
     {
@@ -24,7 +26,8 @@ export class SingleuserComponent implements OnInit {
       lname:String,
       email:String,
       isAdmin:Number,
-      blockstatus:Number
+      blockstatus:Number,
+      userstatus:Number
     }
   public params:any  
   ngOnInit(): void {
@@ -44,11 +47,35 @@ export class SingleuserComponent implements OnInit {
             console.log("Single User Form Component data fetch")
             console.log(data);
             this.users = JSON.parse(JSON.stringify(data));
-            var usertypea:any=this.users.blockstatus;
-             if(usertypea==1)
+            var userStatusa:any=this.users.blockstatus;
+            var createdUsera:any=this.users.userstatus;
+            var userTypea:any=this.users.isAdmin;
+            
+             if(userStatusa==1)
              {
-              this.usertype="Normal";
+              this.userStatus="Blocked User";
              }
+             else
+             {
+              this.userStatus="UnBlocked User";
+             }
+             if(createdUsera==1)
+             {
+              this.createdUser="User Created By Admin";
+             }
+             else
+             {
+              this.createdUser="Created By Signup";
+             }
+             if(userTypea==1)
+             {
+              this.userType="Admin User";
+             }
+             else
+             {
+              this.userType="Normal User";
+             }
+
           }
     });
     
@@ -83,14 +110,7 @@ blockUser(id:any){
   });
 
 }
-// getUserAdminStatus(admstatus:any){
-//   console.log(admstatus);
-//   // if(admstatus==1)
-//   // {
-//   // return.this("Admin")
-//   // }
 
-// }
 }
 
 

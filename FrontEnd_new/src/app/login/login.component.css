@@ -8,6 +8,10 @@ body{
     color: white;
     size: large;
   }
+  .google_text{
+    color: rgb(30, 77, 157);
+    size: large;
+  }
 
 /* .navbar{
     background:rgb(0, 0, 0);

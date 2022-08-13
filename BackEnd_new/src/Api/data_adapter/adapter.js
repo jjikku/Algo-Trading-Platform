@@ -115,7 +115,7 @@ async function API_Md_login (xtsMarketDataAPI) {
   }
 
  async function getLTP(xtsMarketDataAPI,inst_id) { 
-  console.log('inst id in getLTP() = ' + inst_id);  
+  //console.log('inst id in getLTP() = ' + inst_id);  
   var LTP;
   let getQuotesRequest = {
     isTradeSymbol: isTradeSymbol,

@@ -3,7 +3,6 @@ import { StrategyService } from 'src/services/strategy.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
-import { EditbookService } from 'src/services/editbook.service';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 

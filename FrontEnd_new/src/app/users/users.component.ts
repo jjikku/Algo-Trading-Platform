@@ -1,5 +1,4 @@
 import { Component,Input, OnInit } from '@angular/core';
-import { SinglebookService } from 'src/services/singlebook.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';

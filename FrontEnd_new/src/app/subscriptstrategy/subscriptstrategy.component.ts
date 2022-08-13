@@ -149,6 +149,8 @@ export class SubscriptstrategyComponent implements OnInit {
           }
           alert("payment success and mail send");
           sessionStorage.removeItem('temp');
+          window.location.reload();
+
           //this.subscribedetails();
           //this.router.navigate(['/subscriptstrategy'])
       },

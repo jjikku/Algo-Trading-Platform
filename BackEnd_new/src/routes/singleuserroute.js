@@ -51,29 +51,47 @@ function verifyToken(req,res,next) {
             }
     
         });
-      
-        singleUserRouter.delete("/:id", verifyToken, function(req,res){
-            //console.log(req.params.email);
 
-            console.log("User Route For Delete (Single User Router)");
+        singleUserRouter.post("/block/:id", verifyToken, function (req, res) {
+
+            var editedUser = {
+                blockstatus:1              
+            };
+            console.log(req.params.id);
+            userModel.findByIdAndUpdate(
+              req.params.id, { $set: editedUser },{new:true},
+              function (err, data) {
+                if (err) {
+                  res.status(401).send(err);
+                } else {
+                  res.send(data);
+                }
+              }
+            );
+          });        
+
+        // singleUserRouter.delete("/:id", verifyToken, function(req,res){
+        //     //console.log(req.params.email);
+
+        //     console.log("User Route For Delete (Single User Router)");
              
-             try{
-                const id = req.params.id;
-                userModel.findOneAndDelete({ _id: id })
-                    .then(function () {
-                        res.send(req.body);
+        //      try{
+        //         const id = req.params.id;
+        //         userModel.findOneAndDelete({ _id: id })
+        //             .then(function () {
+        //                 res.send(req.body);
 
-                });                
-                }
+        //         });                
+        //         }
                 
-                catch(e)
-                {
-                    console.log(e);
-                    console.log("error");
-                    res.send(e);
-                }
+        //         catch(e)
+        //         {
+        //             console.log(e);
+        //             console.log("error");
+        //             res.send(e);
+        //         }
         
-            });
+        //     });
           
 
 module.exports = singleUserRouter;

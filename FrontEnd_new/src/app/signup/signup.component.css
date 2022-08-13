@@ -5,23 +5,17 @@ body{
 }
 
 
-
-
-
 .card
 {
     
-      width: 700px;
-  height:550px;
-
-    margin-top: 100px;
-    background: black;
+    width: 700px;
+    height:550px;
+    margin-top: 1px;
+    background: rgba(217, 190, 190, 0.8);
     color: white;
 
 
 }
-
-
 
 footer{
   

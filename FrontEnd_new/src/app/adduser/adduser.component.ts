@@ -45,7 +45,7 @@ export class AdduserComponent implements OnInit {
     const isAdmin=0; 
 
     this.addUserservice.addUserService({fname,lname,email,pwd,isAdmin})
-    .subscribe((data) => {
+    .subscribe((data:any) => {
       console.log("Add User Subscribe");
       let status = data.status;
       console.log("Add User Status="+status);

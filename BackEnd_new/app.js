@@ -43,6 +43,12 @@ app.use("/singlestrategy",singleStrategyRouter);
 app.use("/deploy",deployRouter);
 app.use('/userpurchase',UserPurchaseRoutes);
 
+app.use("/users", usersRouter);
+
+app.use("/singleuser", singleUserRouter);
+app.use("/edituser",editUsersRouter);
+
+
 const PORT = (process.env.PORT || 5000);
 
 app.listen(PORT, () => {

@@ -92,7 +92,7 @@ async function execution_engine(strategy,res) {
 
             LTP[i] = await getLTP(xts, inst_id[i]);
             buy_sell[i] = element.buy_sell;
-            console.log("inst ID = " + inst_id[i] + ": LTP = " + LTP[i]);
+            //console.log("inst ID = " + inst_id[i] + ": LTP = " + LTP[i]);
             
             let date_obj = new Date();
             curr_time =
@@ -112,26 +112,30 @@ async function execution_engine(strategy,res) {
             if (curr_hrs[i] > entry_hrs[i] && !flag[i]) {
               flag[i] = 1;
               entry_price[i] = await placeOrder(element.buy_sell, flag[i] ? element.qty_in_lots : 0, inst_id[i]);
+              console.log("ENTRY - inst ID = " + buy_sell[i] + ":" + inst_id[i] + "entry_price = " + entry_price[i] + ": exit_price = " + exit_price[i]);
 
               //entry_price[i] = LTP[i];
             } else if (curr_hrs[i] == entry_hrs[i] && !flag[i]) {
               if (curr_mins[i] > entry_mins[i]) {
                 flag[i] = 1;
                 await placeOrder(element.buy_sell, flag[i] ? element.qty_in_lots : 0, inst_id[i]);
+                console.log("ENTRY - inst ID = " + buy_sell[i] + ":" + inst_id[i] + "entry_price = " + entry_price[i] + ": exit_price = " + exit_price[i]);
 
                 entry_price[i] = LTP[i];
               } else if (curr_mins[i] == entry_mins[i]) {
                 if (curr_secs[i] >= entry_secs[i]) {
                   flag[i] = 1;
                   entry_price[i] = await placeOrder(element.buy_sell, flag[i] ? element.qty_in_lots : 0, inst_id[i]);
+                  console.log("ENTRY - inst ID = " + buy_sell[i] + ":" + inst_id[i] + "entry_price = " + entry_price[i] + ": exit_price = " + exit_price[i]);
+
                   //entry_price[i] = LTP[i];
                 }
               }
             }
-              console.log('exit_ready before buy sell : =' + exit_ready);
-              console.log('flag before buy sell       : =' + flag[i]); 
-              console.log('exit flag before buy sell  : =' + exit_flag[i]); 
-              console.log('buy_sell before buy sell   : =' + buy_sell[i]);
+              //console.log('exit_ready before buy sell : =' + exit_ready);
+              //console.log('flag before buy sell       : =' + flag[i]); 
+              //console.log('exit flag before buy sell  : =' + exit_flag[i]); 
+              //console.log('buy_sell before buy sell   : =' + buy_sell[i]);
               exit_ready[i] = exitRoute ? 1 : exit_ready[i];
 
             if (buy_sell[i] == "s") {
@@ -173,7 +177,9 @@ async function execution_engine(strategy,res) {
                 let buy_sell = "b";
                 //order[i] = {inst:ce_inst[i],strike:ce_strike[i],expiry:ce_expiry[i],buy_sell:buy_sell,qty:ce_qty[i]};
                 exit_price[i] = await placeOrder(buy_sell, flag[i] ? element.qty_in_lots : 0, inst_id[i]);
-                push_order_array(order[i]);
+                console.log("EXIT - inst ID = " + buy_sell[i] + ":" + inst_id[i] + "entry_price = " + entry_price[i] + ": exit_price = " + exit_price[i]);
+
+                //push_order_array(order[i]);
                 //exit_price[i] = LTP[i];
 
                 exit_flag[i] = 1;
@@ -210,7 +216,7 @@ async function execution_engine(strategy,res) {
                     
               if (
                 ((LTP[i] <=(entry_price[i] * (1 - element.stop_loss_percentage / 100))) ||
-                (LTP[i] >= entry_price[i] * (element.target_profit_percentage / 100)+1) ||
+                (LTP[i] >= entry_price[i] * ((element.target_profit_percentage / 100)+1)) ||
                 exit_ready[i]) &&
                 flag[i] &&
                 !exit_flag[i]
@@ -218,16 +224,17 @@ async function execution_engine(strategy,res) {
                 buy_sell = "s";
                 //order[i] = {inst:ce_inst[i],strike:ce_strike[i],expiry:ce_expiry[i],buy_sell:buy_sell,qty:ce_qty[i]};
                 exit_price[i] = await placeOrder(buy_sell, flag[i] ? element.qty_in_lots : 0, inst_id[i]);
-                push_order_array(order[i]);
+                console.log("EXIT - inst ID = " + buy_sell[i] + ":" + inst_id[i] + "entry_price = " + entry_price[i] + ": exit_price = " + exit_price[i]);
+                //push_order_array(order[i]);
                 //exit_price[i] = LTP[i];
-                console.log("LTP after exit = " + LTP[i]);
+                //console.log("LTP after exit = " + LTP[i]);
                 exit_flag[i] = 1;
               }
             }
           });
           
-          console.log("entry =" + entry_price[i]);
-          console.log("exit =" + exit_price[i] + "flag = " + exit_flag[i]);
+          // console.log("entry =" + entry_price[i]);
+          // console.log("exit =" + exit_price[i] + "flag = " + exit_flag[i]);
 
           res.write(`id: ${i}\n`);
           res.write('event: LTP\n');
@@ -239,7 +246,7 @@ async function execution_engine(strategy,res) {
           const isTrue = (currentValue) => currentValue == 1;
 
           if (exit_flag.every(isTrue)) {
-            console.log("EXIT = exited " + inst_id[i]);
+            //console.log("EXIT = exited " + inst_id[i]);
             
             clearInterval(id);
             return null;
@@ -255,8 +262,8 @@ async function execution_engine(strategy,res) {
             inst_id,
             25 * parseInt(qty),
             buy_or_sell,xts_int);
-            push_order_array(order);
-            console.log("TRADE EXECUTED PRICE = " + order_details.tradeprice );
+            //push_order_array(order);
+            //console.log("TRADE EXECUTED PRICE = " + order_details.tradeprice );
             return order_details.tradeprice;
 
         }
@@ -265,20 +272,8 @@ async function execution_engine(strategy,res) {
   });
 }
 
-//execution_engine();
 
-function push_order_array(order) {
-  console.log("order =" + JSON.stringify(order));
-  order_array.push(order);
-  var popped = order_array.pop();
-  //console.log("popped order = " + popped);
-}
-
-function pop_order_array() {
-  return order_array.pop();
-}
-
-module.exports = { execution_engine, pop_order_array };
+module.exports = { execution_engine };
 // module.exports = pop_order_array;
 //  {
 //     pop_order_array,

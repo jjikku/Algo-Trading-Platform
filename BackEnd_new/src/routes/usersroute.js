@@ -3,6 +3,7 @@ const express = require("express");
 const usersRouter = express.Router();
 const userModel = require("../model/users.model");
 const jwt = require("jsonwebtoken");
+var bcrypt = require("bcrypt");
 
 function verifyToken(req,res,next) {
      const auth =  req.headers['authorization'];
@@ -33,50 +34,67 @@ function verifyToken(req,res,next) {
   }
 
   usersRouter.post("/adduser", verifyToken, function (req, res) {
-    var newuser = {
-      fname: req.body.user.fname,
-      lname: req.body.user.lname,
-      email: req.body.user.email,
-      pwd: req.body.user.pwd,
-      blockstatus:0,
-      userstatus:1,
-      isAdmin:0
-     };
 
-     console.log("Add User Route")
-     userModel.findOne({ "email": newuser.email }, (error,user) => {
-         if(error)
-         {
-           console.log(error);
-         }
-         else if(user)
-         {
-           console.log("This Email Id Exists");
-           res.json({status:false});
-         }
-         else
-         {
-          var adduser = new userModel(newuser);
-           adduser.save((error,newuser) => {
-             console.log("User Saved");
-             console.log("New User=" + newuser);
+    var hashedPassword;
+
+  bcrypt.genSalt(10, function (err, Salt) {
+  
+    // The bcrypt is used for encrypting password.
+    bcrypt.hash(req.body.user.pwd, Salt, function (err, hash) {
+  
+        if (err) {
+            return console.log('Cannot encrypt');
+        }
+  
+        hashedPassword = hash;
+        console.log("hashed pwd = " + hash);
+        var newuser = {
+          fname: req.body.user.fname,
+          lname: req.body.user.lname,
+          email: req.body.user.email,
+          pwd: hashedPassword,
+          blockstatus:0,
+          userstatus:1,
+          isAdmin:0
+         };
+
+         console.log("Signup Route")
+         console.log("Add User Route")
+         userModel.findOne({ "email": newuser.email }, (error,user) => {
              if(error)
              {
                console.log(error);
-               res.json({status:true});
+    
+             }
+             else if(user)
+             {
+               console.log("This Email Id Exists");
+               res.json({status:false});
              }
              else
              {
-               res.json({status:true}).status(200);
+              var adduser = new userModel(newuser);
+               adduser.save((error,newuser) => {
+                 console.log("User Saved");
+                 console.log("New User=" + newuser);
+                 if(error)
+                 {
+                   console.log(error);
+                   res.json({status:true});
+                 }
+                 else
+                 {
+                  res.json({status:true});
+                 }
+               } 
+               );
              }
-           } 
-           );
-         }
-     });
-
+         });
+        
+    })
   });
-
-
+  });
+  
   usersRouter.get("/",verifyToken, function(req,res){
     console.log("User List Function ");
      //console.log(checkuser);

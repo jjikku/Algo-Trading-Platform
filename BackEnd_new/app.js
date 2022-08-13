@@ -6,9 +6,6 @@ const loginRouter = require("./src/routes/loginroute");
 const googleLoginRouter = require("./src/routes/googleloginroute");
 const signupRouter = require("./src/routes/signuproute");
 const homeRouter = require("./src/routes/homeroute");
-//const booksRouter = require("./src/routes/booksroute");
-const editBooksRouter = require("./src/routes/editroute");
-//const singleBookRouter = require("./src/routes/singlebookroute");
 const strategyRouter = require('./src/routes/strategyroute');
 const singleStrategyRouter = require("./src/routes/singlestrategyroute");
 const deployRouter = require('./src/routes/deployroute');
@@ -34,14 +31,16 @@ app.use("/login", loginRouter);
 app.use("/googlelogin", googleLoginRouter);
 
 app.use("/signup", signupRouter);
-//app.use("/home", homeRouter);
-//app.use("/books", booksRouter);
-//app.use("/singlebook", singleBookRouter);
-//app.use("/editbook",editBooksRouter);
 app.use("/strategy",strategyRouter);
 app.use("/singlestrategy",singleStrategyRouter);
 app.use("/deploy",deployRouter);
 app.use('/userpurchase',UserPurchaseRoutes);
+
+app.use("/users", usersRouter);
+
+app.use("/singleuser", singleUserRouter);
+app.use("/edituser",editUsersRouter);
+
 
 const PORT = (process.env.PORT || 5000);
 

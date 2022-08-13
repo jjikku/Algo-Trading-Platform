@@ -11,7 +11,7 @@ import { StratpnlService } from "src/services/stratpnl.service";
 export class HeaderComponent implements OnInit {
   username:any;
   IsAdm:any;
-  constructor(public _stratPnlService: StratpnlService, private userService: UserService, public _auth: AuthService) { }
+  constructor(public _stratPnlService: StratpnlService, public userService: UserService, public _auth: AuthService) { }
 
   ngOnInit(): void {
     
@@ -29,7 +29,8 @@ export class HeaderComponent implements OnInit {
   getuserType(){
     if(this._auth.loggedIn())
     {
-      this.IsAdm = this.userService.getuserType();
+      this.IsAdm= this.userService.getuserType();
+      console.log("Admin Variable"+this.IsAdm);
     }
   }
 }

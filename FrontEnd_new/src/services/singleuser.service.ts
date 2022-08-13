@@ -30,6 +30,12 @@ export class SingleuserService {
     return this.http.post("http://localhost:5000/singleuser/block/"+id,{"user":user});
 
   }
+  unBlockUser(id:any,user:any)
+  {   
+    console.log("Block Service. "+user);
+    return this.http.post("http://localhost:5000/singleuser/unblock/"+id,{"user":user});
+
+  }
   getUserAdminStatus(admstatus:any){
     console.log(admstatus);
     // if(admstatus==1)

@@ -9,14 +9,10 @@ import { LoginComponent } from './login/login.component';
 import { FooterComponent } from './footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { BooksComponent } from './books/books.component';
-import { AddbooksComponent } from './addbooks/addbooks.component';
-import { SinglebookComponent } from './singlebook/singlebook.component';
 import { HeaderComponent } from './header/header.component';
 import { AuthService  } from 'src/services/auth.service';
 import { AuthGuard } from './auth.guard';
 import { TokeninterceptorService } from 'src/services/tokeninterceptor.service';
-import { EditbookComponent } from './editbook/editbook.component'; 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { StrategyComponent } from './strategy/strategy.component';
 import { AddstrategyComponent } from './addstrategy/addstrategy.component';
@@ -33,6 +29,7 @@ import { AdduserComponent } from './adduser/adduser.component';
 import { SubscriptstrategyComponent } from './subscriptstrategy/subscriptstrategy.component'
 import { UsersComponent } from './users/users.component';
 import { EdituserComponent } from './edituser/edituser.component';
+import { SingleuserComponent } from './singleuser/singleuser.component';
 
 @NgModule({
   declarations: [
@@ -41,11 +38,7 @@ import { EdituserComponent } from './edituser/edituser.component';
     SignupComponent,
     LoginComponent,
     FooterComponent,
-    BooksComponent,
-    AddbooksComponent,
-    SinglebookComponent,
     HeaderComponent,
-    EditbookComponent,
     StrategyComponent,
     AddstrategyComponent,
     SinglestrategyComponent,
@@ -54,7 +47,8 @@ import { EdituserComponent } from './edituser/edituser.component';
     AdduserComponent,
     SubscriptstrategyComponent,
     UsersComponent,
-    EdituserComponent
+    EdituserComponent,
+    SingleuserComponent
   ],
   imports: [
     BrowserModule,

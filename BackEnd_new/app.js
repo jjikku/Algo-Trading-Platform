@@ -7,7 +7,6 @@ const googleLoginRouter = require("./src/routes/googleloginroute");
 const signupRouter = require("./src/routes/signuproute");
 const homeRouter = require("./src/routes/homeroute");
 //const booksRouter = require("./src/routes/booksroute");
-const editBooksRouter = require("./src/routes/editroute");
 //const singleBookRouter = require("./src/routes/singlebookroute");
 const strategyRouter = require('./src/routes/strategyroute');
 const singleStrategyRouter = require("./src/routes/singlestrategyroute");

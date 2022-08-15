@@ -28,7 +28,14 @@ loginRouter.post("/", async function (req, res) {
               console.log("hashed pwd not matched");
               //res.status(401).send("Invalid Password");
               res.json({ status: false });
-            } else {
+            } 
+            else if(user.blockstatus===1) {
+              console.log(user.blockstatus);
+              res.status(200).send({blockstatus:user.blockstatus});
+              
+          }
+
+            else {
               console.log("password matched");
               let payload = { subject: user._id };
               token = jwt.sign(payload, "secretkey");
@@ -36,6 +43,7 @@ loginRouter.post("/", async function (req, res) {
                 .status(200)
                 .send({
                   status: true,
+                  blockstatus:user.blockstatus,
                   fname: user.fname,
                   lname: user.lname,
                   isAdmin: user.isAdmin,

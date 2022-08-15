@@ -7,6 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { SingleuserService } from 'src/services/singleuser.service';
 import { AuthService } from 'src/services/auth.service';
 import { number } from 'echarts';
+import { UserService } from 'src/services/user.service';
 
 
 @Component({
@@ -18,7 +19,10 @@ export class SingleuserComponent implements OnInit {
   public userStatus:String=""
   public createdUser:String=""
   public userType:String=""
-  constructor(private _ActivatedRoute:ActivatedRoute, private singleuserservice: SingleuserService, private router: Router,public _auth: AuthService) { }
+  public userTypea:any
+  public userStatusa:any
+  constructor(private _ActivatedRoute:ActivatedRoute, private singleuserservice: SingleuserService, private router: Router,public _auth: AuthService,
+    public userService:UserService) { }
   users = 
     {
       _id:Number,
@@ -47,11 +51,11 @@ export class SingleuserComponent implements OnInit {
             console.log("Single User Form Component data fetch")
             console.log(data);
             this.users = JSON.parse(JSON.stringify(data));
-            var userStatusa:any=this.users.blockstatus;
+            this.userStatusa=this.users.blockstatus;
             var createdUsera:any=this.users.userstatus;
-            var userTypea:any=this.users.isAdmin;
+             this.userTypea=this.users.isAdmin;
             
-             if(userStatusa==1)
+             if(this.userStatusa==1)
              {
               this.userStatus="Blocked User";
              }
@@ -67,7 +71,7 @@ export class SingleuserComponent implements OnInit {
              {
               this.createdUser="Created By Signup";
              }
-             if(userTypea==1)
+             if(this.userTypea==1)
              {
               this.userType="Admin User";
              }
@@ -106,6 +110,17 @@ blockUser(id:any){
     console.log("User Blocked");
     console.log(data);
     alert("User Blocked");
+    this.router.navigate(['/users']);
+  });
+
+}
+unBlockUser(id:any){
+  console.log("BlockUser"+ id) ;
+  this.singleuserservice.unBlockUser(id,this.users)
+  .subscribe((data) => {
+    console.log("User Un Blocked");
+    console.log(data);
+    alert("User Un Blocked");
     this.router.navigate(['/users']);
   });
 

@@ -69,7 +69,23 @@ function verifyToken(req,res,next) {
               }
             );
           });        
+          singleUserRouter.post("/unblock/:id", verifyToken, function (req, res) {
 
+            var editedUser = {
+                blockstatus:0              
+            };
+            console.log(req.params.id);
+            userModel.findByIdAndUpdate(
+              req.params.id, { $set: editedUser },{new:true},
+              function (err, data) {
+                if (err) {
+                  res.status(401).send(err);
+                } else {
+                  res.send(data);
+                }
+              }
+            );
+          });     
         // singleUserRouter.delete("/:id", verifyToken, function(req,res){
         //     //console.log(req.params.email);
 

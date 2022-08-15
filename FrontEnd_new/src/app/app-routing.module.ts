@@ -86,7 +86,19 @@ const routes: Routes = [
   // canActivate: [AuthGuard],
   pathMatch: 'full', 
   component:SubscriptstrategyComponent
-}
+},
+{
+  path:"singleuser/block/:id",    
+  canActivate: [AuthGuard],
+  pathMatch: 'full',
+  component:SingleuserComponent
+},
+{
+  path:"singleuser/unblock/:id",    
+  canActivate: [AuthGuard],
+  pathMatch: 'full',
+  component:SingleuserComponent
+},
 ];
 
 @NgModule({

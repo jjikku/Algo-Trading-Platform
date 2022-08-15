@@ -29,6 +29,7 @@ import { AdduserComponent } from './adduser/adduser.component';
 import { SubscriptstrategyComponent } from './subscriptstrategy/subscriptstrategy.component'
 import { UsersComponent } from './users/users.component';
 import { EdituserComponent } from './edituser/edituser.component';
+import { SingleuserComponent } from './singleuser/singleuser.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { EdituserComponent } from './edituser/edituser.component';
     AdduserComponent,
     SubscriptstrategyComponent,
     UsersComponent,
-    EdituserComponent
+    EdituserComponent,
+    SingleuserComponent
   ],
   imports: [
     BrowserModule,

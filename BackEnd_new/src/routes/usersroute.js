@@ -40,7 +40,7 @@ function verifyToken(req,res,next) {
   bcrypt.genSalt(10, function (err, Salt) {
   
     // The bcrypt is used for encrypting password.
-    bcrypt.hash(req.body.signup.pwd, Salt, function (err, hash) {
+    bcrypt.hash(req.body.user.pwd, Salt, function (err, hash) {
   
         if (err) {
             return console.log('Cannot encrypt');

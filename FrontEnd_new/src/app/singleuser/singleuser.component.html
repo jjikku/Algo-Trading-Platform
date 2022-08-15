@@ -27,10 +27,27 @@
                         </form>
 
                         <form >
+                        
                         <input type="hidden" name="id" value="{{ users._id }}">
-                        <button id="dltbtn" type="submit" class = "btn btn-danger btn-sm" style="float: right; margin-right: 25px" (click)="blockUser(users._id)">Block </button>
-                        </form>
+                        <!-- <div  *ngIf ="userTypea" >
+                        <button id="dltbtn"  type="submit" class = "btn btn-danger btn-sm disable" style="float: right; margin-right: 25px">Block</button>
+                        </div> -->
+                        <div  *ngIf ="!userTypea">
+                            <div  *ngIf ="!userStatusa">
+                              <button id="dltbtn"  type="submit" class = "btn btn-danger btn-sm" style="float: right; margin-right: 25px" (click)="blockUser(users._id)">Block </button>
+                            </div> 
+                            <div  *ngIf ="userStatusa">
+                              <button id="dltbtn"  type="submit" class = "btn btn-danger btn-sm" style="float: right; margin-right: 25px" (click)="unBlockUser(users._id)">UnBlock </button>
+                            </div> 
+                        </div>
+                        <div  *ngIf ="userTypea">
+                            <button id="dltbtn"  type="submit" disabled class = "btn btn-danger btn-sm disable" style="float: right; margin-right: 25px" >Block </button>
+                        </div> 
 
+                        <!-- <button id="dltbtn"  type="submit" class = "btn btn-danger btn-sm" style="float: right; margin-right: 25px" (click)="blockUser(users._id)">UnBlock </button> -->
+                        
+                        </form>
+                        
                         <form (submit) = "addUser()" >
                         <input type="hidden" name="id" >
                         <!-- <button id="dltbtn" type="submit" class = "btn btn-success btn-sm" style="float: right; margin-right: 25px" routerLink="/signup">Add </button> -->

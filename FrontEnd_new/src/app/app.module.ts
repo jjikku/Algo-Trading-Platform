@@ -27,9 +27,9 @@ import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { environment } from 'src/environments/environment';
 import { AdduserComponent } from './adduser/adduser.component';
 import { SubscriptstrategyComponent } from './subscriptstrategy/subscriptstrategy.component'
-import { UsersComponent } from './users/users.component';
 import { EdituserComponent } from './edituser/edituser.component';
 import { SingleuserComponent } from './singleuser/singleuser.component';
+import { UsersComponent } from './users/users.component';
 
 @NgModule({
   declarations: [
@@ -46,9 +46,9 @@ import { SingleuserComponent } from './singleuser/singleuser.component';
     StratpnlComponent,
     AdduserComponent,
     SubscriptstrategyComponent,
-    UsersComponent,
     EdituserComponent,
-    SingleuserComponent
+    SingleuserComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,

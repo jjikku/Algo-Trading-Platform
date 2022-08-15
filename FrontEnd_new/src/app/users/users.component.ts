@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { UsersService } from 'src/services/users.service';
+import { UserService } from 'src/services/user.service';
 
 @Component({
   selector: 'app-users',
@@ -20,11 +20,11 @@ export class UsersComponent implements OnInit {
       isAdmin:Number
     }
   ]
-  constructor(private userservice: UsersService, private router:Router) { }
+  constructor(private userservice: UserService, private router:Router) { }
 
   ngOnInit(): void {
     this.userservice.getUsers()
-    .subscribe((data) => {
+    .subscribe((data:any) => {
       if(data instanceof HttpErrorResponse)
       {
         if(data.status === 401)

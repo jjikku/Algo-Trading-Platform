@@ -1,7 +1,7 @@
 let mongoose = require('mongoose');
 let mailer = require('../helper/mailer');
 let razorpayInstance = require('../helper/razorpay');
-let UserSubscribeModel = require('../model/usersubscribe.Model');
+let UserSubscribeModel = require('../model/usersubscribe.model');
 
 module.exports.purchase = async (req, res) => {
     let data = req.body;

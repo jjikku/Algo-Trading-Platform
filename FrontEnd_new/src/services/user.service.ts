@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { CommonURL } from 'src/services/common';
 
 @Injectable({
   providedIn: 'root'
@@ -60,20 +61,23 @@ export class UserService {
   }
   getUsers()
   {   
-    
-    return this.http.get("http://localhost:5000/users")
+    return this.http.get(`${CommonURL.BASE_URL}/users`)
+    //return this.http.get("http://localhost:5000/users")
 
   }
 
   getSingleUser(id:any)
   {   
-    return this.http.get("http://localhost:5000/users/"+id);
+    return this.http.get(`${CommonURL.BASE_URL}/users`+id);
+
+    //return this.http.get("http://localhost:5000/users/"+id);
   }
 
   editUser(id:any, user:any)
   {   
     console.log("Edituser Service editUser Fun=  "+id,user);
-     return this.http.post("http://localhost:5000/edituser/"+id,{"user":user});
+    return this.http.post(`${CommonURL.BASE_URL}/edituser/`+id,{"user":user}); 
+    //return this.http.post("http://localhost:5000/edituser/"+id,{"user":user});
     //return this.http.post<any>("http://localhost:5000/edituser/"+id,{"user":item});
   }  
   getUserStatus() {

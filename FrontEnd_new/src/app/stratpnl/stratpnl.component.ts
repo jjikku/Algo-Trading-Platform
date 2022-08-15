@@ -3,6 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { StratpnlService } from "src/services/stratpnl.service";
 import { Router } from "@angular/router";
 import { NgForOf, NgIf } from "@angular/common";
+import { CommonURL } from 'src/services/common';
 
 @Component({
   //standalone: true,
@@ -48,7 +49,9 @@ export class StratpnlComponent implements OnInit {
 
   getPositions() {
     getServerSentEvent(
-      "http://localhost:5000/deploy/" + this.params,
+      `${CommonURL.BASE_URL}/deploy/` + this.params,
+
+      //"http://localhost:5000/deploy/" + this.params,
       this.inst
     );
 

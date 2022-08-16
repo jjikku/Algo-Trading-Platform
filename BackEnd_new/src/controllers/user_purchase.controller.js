@@ -77,6 +77,8 @@ module.exports.purchase_success = async (req, res) => {
 
 module.exports.get_single_business = (req, res) => {
     try {
+        exitRoute = 1;
+
         let emailid = req.params._id;
         UserSubscribeModel.find({
             email: emailid

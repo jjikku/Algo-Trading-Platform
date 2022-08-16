@@ -30,6 +30,7 @@ import { SubscriptstrategyComponent } from './subscriptstrategy/subscriptstrateg
 import { EdituserComponent } from './edituser/edituser.component';
 import { SingleuserComponent } from './singleuser/singleuser.component';
 import { UsersComponent } from './users/users.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { UsersComponent } from './users/users.component';
     BrowserAnimationsModule,
     CommonModule,
     SocialLoginModule,
+    NgxPaginationModule,
     NgxMaskModule.forRoot({
 			validation: true,
 		})

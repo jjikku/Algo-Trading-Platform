@@ -111,21 +111,21 @@ async function execution_engine(strategy,res) {
             entry_secs[i] = parseInt(element.entry_time.split(":")[2]);
             if (curr_hrs[i] > entry_hrs[i] && !flag[i]) {
               flag[i] = 1;
-              entry_price[i] = await placeOrder(element.buy_sell, flag[i] ? element.qty_in_lots : 0, inst_id[i]);
+              entry_price[i] = await placeOrder(buy_sell[i], flag[i] ? element.qty_in_lots : 0, inst_id[i]);
               console.log("ENTRY - inst ID = " + buy_sell[i] + ":" + inst_id[i] + "entry_price = " + entry_price[i] + ": exit_price = " + exit_price[i]);
 
               //entry_price[i] = LTP[i];
             } else if (curr_hrs[i] == entry_hrs[i] && !flag[i]) {
               if (curr_mins[i] > entry_mins[i]) {
                 flag[i] = 1;
-                await placeOrder(element.buy_sell, flag[i] ? element.qty_in_lots : 0, inst_id[i]);
+                await placeOrder(buy_sell[i], flag[i] ? element.qty_in_lots : 0, inst_id[i]);
                 console.log("ENTRY - inst ID = " + buy_sell[i] + ":" + inst_id[i] + "entry_price = " + entry_price[i] + ": exit_price = " + exit_price[i]);
 
                 entry_price[i] = LTP[i];
               } else if (curr_mins[i] == entry_mins[i]) {
                 if (curr_secs[i] >= entry_secs[i]) {
                   flag[i] = 1;
-                  entry_price[i] = await placeOrder(element.buy_sell, flag[i] ? element.qty_in_lots : 0, inst_id[i]);
+                  entry_price[i] = await placeOrder(buy_sell[i], flag[i] ? element.qty_in_lots : 0, inst_id[i]);
                   console.log("ENTRY - inst ID = " + buy_sell[i] + ":" + inst_id[i] + "entry_price = " + entry_price[i] + ": exit_price = " + exit_price[i]);
 
                   //entry_price[i] = LTP[i];
@@ -175,17 +175,18 @@ async function execution_engine(strategy,res) {
                 !exit_flag[i] 
               )  {
                 let buy_sell = "b";
+                exit_flag[i] = 1;
+
                 //order[i] = {inst:ce_inst[i],strike:ce_strike[i],expiry:ce_expiry[i],buy_sell:buy_sell,qty:ce_qty[i]};
                 exit_price[i] = await placeOrder(buy_sell, flag[i] ? element.qty_in_lots : 0, inst_id[i]);
-                console.log("EXIT - inst ID = " + buy_sell[i] + ":" + inst_id[i] + "entry_price = " + entry_price[i] + ": exit_price = " + exit_price[i]);
+                console.log("EXIT - inst ID = " + buy_sell + ":" + inst_id[i] + "entry_price = " + entry_price[i] + ": exit_price = " + exit_price[i] + "i = " +  i + "  exit_flag = " + exit_flag[i]);
 
                 //push_order_array(order[i]);
                 //exit_price[i] = LTP[i];
 
-                exit_flag[i] = 1;
               }
               
-            } else {
+            } else if(buy_sell[i] == 'b') {
               exit_hrs[i] = parseInt(element.exit_time.split(":")[0]);
               exit_mins[i] = parseInt(element.exit_time.split(":")[1]);
               exit_secs[i] = parseInt(element.exit_time.split(":")[2]);
@@ -221,14 +222,15 @@ async function execution_engine(strategy,res) {
                 flag[i] &&
                 !exit_flag[i]
               ) {
-                buy_sell = "s";
+                let buy_sell = "s";
+                exit_flag[i] = 1;
+
                 //order[i] = {inst:ce_inst[i],strike:ce_strike[i],expiry:ce_expiry[i],buy_sell:buy_sell,qty:ce_qty[i]};
                 exit_price[i] = await placeOrder(buy_sell, flag[i] ? element.qty_in_lots : 0, inst_id[i]);
-                console.log("EXIT - inst ID = " + buy_sell[i] + ":" + inst_id[i] + "entry_price = " + entry_price[i] + ": exit_price = " + exit_price[i]);
+                console.log("EXIT - inst ID = " + buy_sell + ":" + inst_id[i] + "entry_price = " + entry_price[i] + ": exit_price = " + exit_price[i] + "i = " +  i + "  exit_flag = " + exit_flag[i]);
                 //push_order_array(order[i]);
                 //exit_price[i] = LTP[i];
                 //console.log("LTP after exit = " + LTP[i]);
-                exit_flag[i] = 1;
               }
             }
           });
@@ -263,7 +265,7 @@ async function execution_engine(strategy,res) {
             25 * parseInt(qty),
             buy_or_sell,xts_int);
             //push_order_array(order);
-            //console.log("TRADE EXECUTED PRICE = " + order_details.tradeprice );
+            console.log("TRADE EXECUTED PRICE = " + order_details.tradeprice );
             return order_details.tradeprice;
 
         }

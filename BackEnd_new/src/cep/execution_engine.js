@@ -350,7 +350,7 @@ async function execution_engine(strategy, res) {
 
             if (price_flag.every(isTrue)) {
               //console.log("EXIT = exited " + inst_id[i]);
-
+              exitRoute = 1;
               clearInterval(id);
               return;
             }

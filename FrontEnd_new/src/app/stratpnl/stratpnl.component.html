@@ -1,6 +1,6 @@
- <section>
+<section *ngIf="inst[0].entryPrice">
 
-<div class="container mr-auto ml-auto" readonly>
+<div class="container mr-auto ml-auto" readonly >
 
     <h2>Strategy Position Details</h2>
     <div class="table-responsive">          
@@ -19,7 +19,9 @@
         </tr>
       </thead>
      <tbody *ngFor="let j of inst;">
-  <tr>
+  <tr *ngIf="j.entryPrice">
+      <td placeholder=""> {{ j.index }}++ </td>
+
       <td> BANKNIFTY_OPTIDX </td>
       <td placeholder=""> {{ j.strike }} </td>
       <td placeholder=""> {{ j.type }} </td>
@@ -41,10 +43,14 @@
         <td> </td>
         <td> </td>
         <td placeholder="" [style.color]="getColor(total)">{{ total }} </td>
+
+        
       </tr>
     </table>
     </div>
     <button id="exitbtn" type="submit" class = "btn btn-danger btn-sm" style="float: right; margin-right: 25px" (click)="exitStrategy()"> Exit All Positions </button>
 
   </div>
+  
 </section>
+<h5 class="text-danger warning"><strong>Do not refresh or press Back button<br>Exit all positions before navigating away from this page</strong></h5>

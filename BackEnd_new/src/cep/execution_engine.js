@@ -353,7 +353,7 @@ async function execution_engine(strategy, res) {
                 ":" +
                 exit_price[i] +
                 ":" +
-                1;
+                apiError;
               res.write(`data: ${JSON.stringify({ inst: res_data[i] })}\n\n`);
 
               res.flush;

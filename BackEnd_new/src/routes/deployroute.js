@@ -39,13 +39,16 @@ deployRouter.get("/exit", function (req, res) {
  //deployRouter.get("/:id", verifyToken, function(req,res){
 deployRouter.get("/:id", function (req, res) {
     exitRoute = 0;
-
+    apiError = 0;
   const headers = {
     "Content-Type": "text/event-stream",
     Connection: "keep-alive",
     "Cache-Control": "no-cache",
-   "Access-Control-Allow-Origin": "*"
+   "Access-Control-Allow-Origin": "*",
+   "X-Accel-Buffering": "no",
+
   };
+  
   res.writeHead(200, headers);
   //res.setHeader("Content-Type", "text/event-stream");
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { StratpnlService } from "src/services/stratpnl.service";
 import { Router } from "@angular/router";
@@ -12,7 +12,7 @@ import { CommonURL } from "src/services/common";
   styleUrls: ["./stratpnl.component.css"],
   // imports: [NgIf, NgForOf]
 })
-export class StratpnlComponent implements OnInit, AfterViewInit {
+export class StratpnlComponent implements OnInit {
   pnl: any;
   constructor(
     private _ActivatedRoute: ActivatedRoute,
@@ -21,14 +21,14 @@ export class StratpnlComponent implements OnInit, AfterViewInit {
   ) {}
   inst = [
     {
-      index: Number,
-      strike: String,
-      type: String,
-      expiry: String,
-      entryPrice: Number,
-      LTP: Number,
-      qty: Number,
-      pnl: Number,
+      index: Number || "----" ,
+      strike: String || "----",
+      type: String || "----",
+      expiry: String || "----",
+      entryPrice: Number || "----",
+      LTP: Number || "----",
+      qty: Number || "----",
+      pnl: Number || "---",
     },
   ];
 
@@ -37,22 +37,25 @@ export class StratpnlComponent implements OnInit, AfterViewInit {
   public position_detail: any;
   public si_id: any;
   public apiError:any;
+  public flag = 0;
   ngOnInit(): void {
     this.params = this._ActivatedRoute.snapshot.paramMap.get("id");
     console.log("Params Strategy PNL Route = " + this.params);
+    
+
+  }
+
+  execute(){
+    this.stratPnlService.execute(this.params);
     this.getPositions();
-    // this.si_id = setInterval(() => {
-    //   //this.findSum();
-    // }, 1000);
+    this.flag = 1;
   }
-  ngAfterViewInit() {
-    alert("Do not refresh or press Back button. Exit all positions before navigating away from this page");
 
-  }
+  
   getPositions() {
-
+    console.log("Inside get position");
     getServerSentEvent(
-      `${CommonURL.BASE_URL}/deploy/` + this.params,
+      `${CommonURL.BASE_URL}/deploy/execute/` + this.params,
 
       //"http://localhost:5000/deploy/" + this.params,
       this.inst

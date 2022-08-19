@@ -37,7 +37,7 @@ deployRouter.get("/exit", function (req, res) {
 });
 
  //deployRouter.get("/:id", verifyToken, function(req,res){
-deployRouter.get("/:id", function (req, res) {
+deployRouter.get("/execute/:id", function (req, res) {
     exitRoute = 0;
     apiError = 0;
   const headers = {
@@ -45,7 +45,7 @@ deployRouter.get("/:id", function (req, res) {
     Connection: "keep-alive",
     "Cache-Control": "no-cache",
    "Access-Control-Allow-Origin": "*",
-   "X-Accel-Buffering": "no",
+  //  "X-Accel-Buffering": "no",
 
   };
   
@@ -54,6 +54,7 @@ deployRouter.get("/:id", function (req, res) {
 
   console.log(req.originalUrl);
   console.log("Deploy router");
+
   //console.log(checkuser);
   try {
     let strategyId = req.params.id;

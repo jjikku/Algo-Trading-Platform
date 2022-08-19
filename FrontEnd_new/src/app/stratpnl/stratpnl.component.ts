@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { StratpnlService } from "src/services/stratpnl.service";
 import { Router } from "@angular/router";
@@ -12,7 +12,7 @@ import { CommonURL } from "src/services/common";
   styleUrls: ["./stratpnl.component.css"],
   // imports: [NgIf, NgForOf]
 })
-export class StratpnlComponent implements OnInit {
+export class StratpnlComponent implements OnInit, AfterViewInit {
   pnl: any;
   constructor(
     private _ActivatedRoute: ActivatedRoute,
@@ -36,8 +36,8 @@ export class StratpnlComponent implements OnInit {
   public params: any;
   public position_detail: any;
   public si_id: any;
+  public apiError:any;
   ngOnInit(): void {
-    
     this.params = this._ActivatedRoute.snapshot.paramMap.get("id");
     console.log("Params Strategy PNL Route = " + this.params);
     this.getPositions();
@@ -45,8 +45,12 @@ export class StratpnlComponent implements OnInit {
     //   //this.findSum();
     // }, 1000);
   }
+  ngAfterViewInit() {
+    alert("Do not refresh or press Back button. Exit all positions before navigating away from this page");
 
+  }
   getPositions() {
+
     getServerSentEvent(
       `${CommonURL.BASE_URL}/deploy/` + this.params,
 
@@ -79,7 +83,7 @@ export class StratpnlComponent implements OnInit {
         const buy_sell = position_detail.inst.split(":")[7];
         const exit_flag = parseInt(position_detail.inst.split(":")[8]);
         const exit_price = parseFloat(position_detail.inst.split(":")[9]);
-
+        //const apiError = parseFloat(position_detail.inst.split(":")[10]);
         const pnl_o =
           exit_flag == 1
             ? buy_sell == "s"
@@ -122,6 +126,7 @@ export class StratpnlComponent implements OnInit {
           pnl,
         };
       });
+      
     }
     function getEventSource(url: string): EventSource {
       console.log("inside sse URL = " + url);

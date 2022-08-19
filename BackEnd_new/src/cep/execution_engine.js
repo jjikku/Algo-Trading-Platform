@@ -366,7 +366,7 @@ async function execution_engine(strategy, res) {
                 clearInterval(id);
                 return;
               }
-            }, 2000);
+            }, 1000);
 
             async function placeOrder(buy_sell, qty, inst_id) {
               var buy_or_sell = buy_sell == "s" ? "SELL" : "BUY";

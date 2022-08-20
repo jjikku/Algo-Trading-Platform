@@ -52,7 +52,7 @@ export class NavbarService {
               }
               this.dayspending =  parseInt(presentdays, 10);
 
-              if(this.dayspending > 0){
+              if(this.dayspending >= 0){
                 this.strategyvisible = true; 
               }
               console.log("this.dayspending", this.dayspending)

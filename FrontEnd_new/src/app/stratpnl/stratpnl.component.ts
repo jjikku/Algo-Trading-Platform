@@ -178,7 +178,7 @@ export class StratpnlComponent implements OnInit {
       console.log(res);
       //clearInterval(this.si_id);
       alert("All positions exited");
-      this.flag = 0;
+      //this.flag = 0;
 
       //this.router.navigate(["\strategy"]);
     });
